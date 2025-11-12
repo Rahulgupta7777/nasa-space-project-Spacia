@@ -15,7 +15,7 @@ export async function GET() {
     // Limit to keep compute small for hackathon
     const N = 20;
     const subset = tle.slice(0, N);
-    const satellite = await import("satellite.js");
+    const satellite = await import('satellite.js');
     const now = new Date();
     const gmst = satellite.gstime(now);
     const recs = subset.map((s) => ({ name: s.name, rec: satellite.twoline2satrec(s.line1, s.line2) }));
@@ -41,7 +41,9 @@ export async function GET() {
       }
     }
     return NextResponse.json({ count: alerts.length, alerts });
-  } catch (e) {
-    return NextResponse.json({ error: "Failed to compute alerts" }, { status: 500 });
-  }
+  }catch (e) {
+  console.error("TLE route error:", e);
+  return NextResponse.json({ error: "Failed to compute alerts" }, { status: 500 });
+}
+
 }
