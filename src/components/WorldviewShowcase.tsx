@@ -3,7 +3,12 @@ import { useMemo, useRef, useEffect } from "react";
 import { animate, stagger, cubicBezier } from "animejs";
 
 export default function WorldviewShowcase() {
-  const dateStr = useMemo(() => new Date().toISOString().slice(0, 10), []);
+  const dateStr = useMemo(() => {
+    const date = new Date();
+    date.setFullYear(2024);
+    return date.toISOString().slice(0, 10);
+  }, []);
+  
   const layers = [
     { name: "MODIS TrueColor", id: "MODIS_Terra_CorrectedReflectance_TrueColor" },
     { name: "VIIRS TrueColor", id: "VIIRS_SNPP_CorrectedReflectance_TrueColor" },
