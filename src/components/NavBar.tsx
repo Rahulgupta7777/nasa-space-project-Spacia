@@ -18,9 +18,8 @@ export default function NavBar() {
             <Satellite size={18} /> Dashboard
           </Link>
           <Link href="/planner" className="hover:text-slate-200">Launch Planner</Link>
-          <Link href="/business" className="hover:text-slate-200">Business</Link>
           <Link href="/spaceweather" className="hover:text-slate-200">Space Weather</Link>
-          <Link href="/about" className="hover:text-slate-200">About</Link>
+          <Link href="/business" className="hover:text-slate-200">Business</Link>
           {session ? (
             <button onClick={() => signOut()} className="rounded border border-slate-700 px-3 py-1 hover:bg-slate-800">Sign out</button>
           ) : (
