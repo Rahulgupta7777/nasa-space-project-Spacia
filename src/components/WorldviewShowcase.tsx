@@ -32,7 +32,7 @@ export default function WorldviewShowcase() {
     <section className="mx-auto max-w-6xl px-4 pb-16" ref={ref}>
       <div className="flex items-baseline justify-between">
         <h2 className="text-xl font-semibold">NASA Worldview Showcase</h2>
-        <div className="text-xs text-slate-400">Date: {dateStr}</div>
+        {/* <div className="text-xs text-slate-400">Date: {dateStr}</div> */}
       </div>
       <p className="mt-2 text-slate-300 max-w-3xl">
         Explore recent Earth imagery layers from NASA GIBS. Open Worldview for full-resolution browsing
