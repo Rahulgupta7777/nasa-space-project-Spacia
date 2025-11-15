@@ -8,12 +8,12 @@ export default function NavBar() {
   // Default theme remains dark; toggle removed per request.
   return (
     <header className="sticky top-0 z-30 glass-panel">
-      <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+      <div className="mx-auto max-w-6xl px-4 py-4 md:py-5 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Globe2 className="text-slate-300" size={22} />
-          <span className="font-semibold tracking-wide">Spacia</span>
+          <Globe2 className="text-slate-300" size={26} />
+          <span className="text-xl font-semibold tracking-wide">Spacia</span>
         </Link>
-        <nav className="flex items-center gap-6 text-sm">
+        <nav className="flex items-center gap-6 text-base">
           <Link href="/dashboard" className="hover:text-slate-200 flex items-center gap-1">
             <Satellite size={18} /> Dashboard
           </Link>
