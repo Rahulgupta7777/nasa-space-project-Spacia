@@ -35,8 +35,8 @@ export default function AnimatedHero() {
         <span className="neon-text">Spacia</span> · Commercializing LEO Responsibly
       </h1>
       <p className="hero-subtitle relative z-10 mt-4 text-center sm:text-left text-slate-300 max-w-2xl">
-        NASA‑grade orbit visualization, live conjunction intelligence, and a mission‑ready UX to support a sustainable LEO economy.
-      </p>
+      A single LEO platform that helps teams plan missions, track satellites, monitor space weather, and make smarter business decisions with an integrated planning LLM.
+</p>
       <div className="mt-8 flex justify-center sm:justify-start gap-4">
         <Link href="/dashboard" className="hero-cta button-primary">Open Dashboard</Link>
         <Link href="/business" className="hero-cta button-secondary">Explore Business</Link>
