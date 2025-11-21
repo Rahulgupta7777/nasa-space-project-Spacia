@@ -2,91 +2,111 @@
 import { useEffect, useRef } from "react";
 import { animate, stagger, cubicBezier } from "animejs";
 import Link from "next/link";
-import { Rocket, Sun, Globe, ArrowRight } from "lucide-react";
+import { Rocket, Sun, Globe, Database,Building2 } from "lucide-react";
+
+
 
 const features = [
-  { 
-    title: "Dashboard", 
-    desc: "Interactive 3D Earth visualization with real-time satellite tracking, debris monitoring, and orbital data visualization.",
+  {
+    title: "Dashboard",
+    desc: "Interactive 3D Earth with real-time satellite tracking, debris monitoring, and orbital data.",
     href: "/dashboard",
     icon: Globe,
-    gradient: "from-slate-700/30 to-slate-900/30",
-    borderColor: "border-slate-600/40",
-    hoverShadow: "hover:shadow-slate-500/20",
-    iconColor: "text-slate-300"
+    accent: "from-slate-700/30 to-slate-900/30",
+    border: "border-slate-600/40",
   },
-  { 
-    title: "Launch Planner Dashboard", 
-    desc: "Plan responsible LEO missions with lifetime estimates, debris risk assessment, and optimal launch site recommendations.",
+  {
+    title: "Launch Planner",
+    desc: "Plan launches with lifetime & debris risk estimates and optimized schedules.",
     href: "/planner",
     icon: Rocket,
-    gradient: "from-blue-600/20 to-indigo-700/20",
-    borderColor: "border-blue-500/40",
-    hoverShadow: "hover:shadow-blue-500/20",
-    iconColor: "text-blue-300"
+    accent: "from-blue-600/20 to-indigo-700/20",
+    border: "border-blue-500/40",
   },
-  { 
-    title: "Space Weather", 
-    desc: "Real-time space weather monitoring with solar flare tracking, Kp index forecasts, and impact assessments for satellites and aviation.",
+  {
+    title: "Space Weather",
+    desc: "Solar flare tracking, Kp forecasts, and impact assessments for satellites and aviation.",
     href: "/spaceweather",
     icon: Sun,
-    gradient: "from-amber-600/20 to-orange-700/20",
-    borderColor: "border-amber-500/40",
-    hoverShadow: "hover:shadow-amber-500/20",
-    iconColor: "text-amber-300"
+    accent: "from-amber-600/20 to-orange-700/20",
+    border: "border-amber-500/40",
   },
+  {
+    title: "Business Advisor",
+    desc: "AI-powered feasibility analysis, commercial mission blueprints, sustainability scoring, and the full partner ecosystem.",
+    href: "/business",
+    icon: Building2,
+    accent: "from-green-600/20 to-teal-700/20",
+    border: "border-green-500/40",
+  },
+
 ];
 
-
 export default function PillarsSection() {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!ref.current) return;
     const cards = ref.current.querySelectorAll(".pillar-card");
-    animate(cards as NodeListOf<Element>, { opacity: [0, 1], translateY: [12, 0], delay: stagger(120), duration: 600, ease: cubicBezier(0.25, 0.46, 0.45, 0.94) });
+    animate(cards, {
+      opacity: [0, 1],
+      translateY: [14, 0],
+      delay: stagger(120),
+      duration: 650,
+      easing: cubicBezier(0.22, 0.9, 0.28, 0.99),
+    });
   }, []);
 
   return (
-    <section className="mx-auto max-w-6xl px-4 pb-16 mb-20" ref={ref}>
-      <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold text-slate-100 mb-2">Key Features</h2>
-        <p className="text-slate-400 text-sm">Explore our powerful tools for space mission planning and monitoring</p>
+    <section className="mt-8" aria-labelledby="features-heading" ref={ref}>
+      <div className="text-center mb-8">
+        <h2 id="features-heading" className="text-3xl font-extrabold text-slate-100">
+          Core Capabilities
+        </h2>
+        <p className="text-slate-400 mt-3 max-w-2xl mx-auto">
+          Tools for situational awareness, mission planning and sustainable commercialization in LEO.
+        </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      {/* CENTERED GRID */}
+      <div
+        role="list"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 place-items-center"
+      >
         {features.map((f) => {
           const Icon = f.icon;
+
           return (
-            <Link 
-              key={f.title} 
-              href={f.href} 
-              className={`pillar-card group relative rounded-xl border ${f.borderColor} bg-gradient-to-br ${f.gradient} backdrop-blur-sm p-6 transition-all duration-300 ${f.hoverShadow} hover:scale-[1.02] hover:-translate-y-1 overflow-hidden`}
+            <Link
+              key={f.title}
+              href={f.href}
+              className={`pillar-card group relative block overflow-hidden rounded-2xl border ${f.border} bg-gradient-to-br ${f.accent} backdrop-blur-sm p-6 transition-transform hover:scale-[1.03] hover:-translate-y-1 shadow-md hover:shadow-xl max-w-[280px] text-center`}
             >
-              {/* Background glow effect */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${f.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl`} />
-              
-              {/* Content */}
-              <div className="relative z-10">
-                <div className="flex items-start justify-between mb-4">
-                  <div className={`p-3 rounded-lg bg-slate-900/40 border border-slate-700/50 transition-colors ${
-                    f.iconColor.includes('cyan') ? 'group-hover:border-cyan-500/50' :
-                    f.iconColor.includes('yellow') ? 'group-hover:border-yellow-500/50' :
-                    'group-hover:border-purple-500/50'
-                  }`}>
-                    <Icon className={`w-6 h-6 ${f.iconColor}`} />
-                  </div>
-                  <ArrowRight className={`w-5 h-5 ${f.iconColor} opacity-0 group-hover:opacity-100 translate-x-[-8px] group-hover:translate-x-0 transition-all duration-300`} />
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-50 blur-3xl transition-all" />
+
+              <div className="relative z-10 flex flex-col items-center h-full min-h-[160px]">
+
+                {/* ICON */}
+                <div
+                  aria-hidden
+                  className="flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-white/8 to-white/2 border border-white/10 shadow-[0_8px_22px_rgba(0,0,0,0.5)] mb-4"
+                >
+                  <Icon className="w-7 h-7 text-slate-100" />
                 </div>
-                
-                <h3 className="text-xl font-bold text-slate-100 mb-2 group-hover:text-white transition-colors">
-                  {f.title}
-                </h3>
-                <p className="text-sm text-slate-300 leading-relaxed group-hover:text-slate-200 transition-colors">
+
+                {/* TITLE & DESC */}
+                <h3 className="text-lg font-semibold text-slate-100">{f.title}</h3>
+                <p className="text-sm text-slate-400 mt-1 line-clamp-3 px-2">
                   {f.desc}
                 </p>
-                
-                {/* Bottom accent line */}
-                <div className={`mt-4 h-0.5 w-0 bg-gradient-to-r ${f.gradient} group-hover:w-full transition-all duration-300`} />
+
+                {/* BOTTOM ACTION */}
+                <div className="mt-auto flex flex-col items-center text-xs text-slate-300 pt-4">
+                  <span>Learn more</span>
+                  <span className="mt-1 text-[11px] px-2 py-1 rounded-full bg-white/6 border border-white/4 text-slate-200">
+                    →
+                  </span>
+                </div>
               </div>
             </Link>
           );
