@@ -7,7 +7,7 @@ export default function Footer() {
         <p>© {new Date().getFullYear()} Spacia. All rights reserved.</p>
         <div className="flex gap-4 items-center">
         <a 
-            href="https://github.com/Rahulgupta7777/nasa-space-project" 
+            href="https://github.com/Rahulgupta7777/nasa-space-project-Spacia" 
             target="_blank" 
             rel="noopener noreferrer"
             className="hover:text-slate-200 flex items-center gap-1"
