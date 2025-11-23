@@ -1,178 +1,133 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]/route";
 
-type BodyShape = {
-  projectName?: string;
-  projectType?: string;
-  description?: string;
-  budget?: string;
-  timeline?: string;
-  partners?: string[];
-  model?: string;
-};
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
+
+if (!OPENAI_API_KEY) {
+  console.warn("[/api/business] Missing OPENAI_API_KEY env variable.");
+}
 
 export async function POST(req: Request) {
   try {
-    // Auth check
-    const session = await getServerSession(authOptions);
-    if (!session) {
+    if (!OPENAI_API_KEY) {
       return NextResponse.json(
-        { error: "Unauthorized. Please sign in to use the business proposal generator." },
-        { status: 401 }
+        { error: "Server misconfiguration: OPENAI_API_KEY is not set." },
+        { status: 500 }
       );
     }
 
-    const body: BodyShape = (await req.json()) || {};
+    const body = await req.json().catch(() => null);
+
+    if (!body) {
+      return NextResponse.json(
+        { error: "Invalid JSON body." },
+        { status: 400 }
+      );
+    }
+
     const {
-      projectName = "",
-      projectType = "",
-      description = "",
-      budget = "",
-      timeline = "",
+      projectName,
+      projectType,
+      description,
+      budget,
+      timeline,
       partners = [],
-      model: modelOverride,
-    } = body;
+    } = body as {
+      projectName: string;
+      projectType: string;
+      description: string;
+      budget?: string;
+      timeline?: string;
+      partners?: string[];
+    };
 
-    // Build context
-    const leoContext = `Low Earth Orbit (LEO) commercialization context:
-- LEO altitude range: 160-2,000 km
-- Key segments: Communications, Earth Observation, Navigation/PNT, Space Tourism, Manufacturing, Debris Removal
-- Critical considerations: Orbital debris, collision avoidance, atmospheric drag, radiation environment
-- Regulatory: FCC/ITU frequency coordination, orbital slot allocation, space traffic management
-- Sustainability: 25-year deorbit rule, active debris removal, end-of-life planning`;
+    if (!projectName || !projectType || !description) {
+      return NextResponse.json(
+        { error: "projectName, projectType, and description are required." },
+        { status: 400 }
+      );
+    }
 
-    const partnerEcosystem = `Partner ecosystem categories:
-- PNT/Navigation: Xona, Aerodome/VyomIC, private GNSS augmentation
-- Earth Observation: Planet, Pixxel, Satellogic, Umbra (SAR/optical/hyperspectral)
-- Ground Stations: KSAT, AWS Ground Station, Azure Space, commercial networks
-- Communications: Mynaric (optical), Viasat, Iridium, satellite internet providers
-- Launch Services: SpaceX Transporter, Rocket Lab, Relativity Space, rideshare programs
-- Analytics/Platforms: SkyServe, Orbital Insight, AI/ML analytics providers
-- Manufacturing: In-space manufacturing, component suppliers
-- Insurance: Space insurance providers, risk assessment
-- Regulatory: Legal counsel, licensing support
-Selected Partners: ${partners.join(", ") || "None specified"}`;
+    // Build a structured prompt for OpenAI
+    const prompt = `
+You are a commercial LEO (Low Earth Orbit) mission strategist and space business analyst.
 
-    const prompt = `You are an expert space commercialization consultant specializing in Low Earth Orbit (LEO) business ventures.
-Generate a comprehensive business proposal for the following LEO commercial project:
-PROJECT DETAILS:
+Generate a clear, investor-ready business proposal for the following mission:
+
 - Project Name: ${projectName}
 - Project Type: ${projectType}
 - Mission Description: ${description}
-- Budget: ${budget}
-- Timeline: ${timeline}
-CONTEXT:
-${leoContext}
-${partnerEcosystem}
-REQUIRED OUTPUT STRUCTURE:
-1. EXECUTIVE SUMMARY
-   - Brief overview of the project value proposition
-   - Target market and customers
-   - Key differentiators
-2. MARKET ANALYSIS
-   - Market size and growth potential
-   - Competitive landscape
-   - Customer segments and demand drivers
-3. TECHNICAL APPROACH
-   - Constellation design (number of satellites, orbit parameters)
-   - Payload specifications and capabilities
-   - Ground segment architecture
-   - Launch strategy and deployment plan
-4. PARTNER ECOSYSTEM
-   - Recommended partnerships for each category
-   - Integration points and dependencies
-   - Risk mitigation through partnerships
-5. BUSINESS MODEL
-   - Revenue streams and pricing strategy
-   - Customer acquisition approach
-   - Unit economics and margins
-6. FINANCIAL PROJECTIONS
-   - Capital requirements breakdown
-   - Operating costs (launch, operations, ground)
-   - Revenue projections (3-5 year outlook)
-   - ROI estimate and payback period
-7. REGULATORY & COMPLIANCE
-   - Licensing requirements (FCC, ITU, national authorities)
-   - Frequency coordination
-   - Orbital slot allocation
-   - Space debris mitigation plan (25-year rule)
-8. RISK ANALYSIS
-   - Technical risks and mitigation strategies
-   - Market risks and competitive threats
-   - Regulatory and policy risks
-   - Financial risks and contingency planning
-9. IMPLEMENTATION TIMELINE
-   - Phase 1: Design and development
-   - Phase 2: Manufacturing and testing
-   - Phase 3: Launch and deployment
-   - Phase 4: Operations and scaling
-   - Key milestones and go/no-go decision points
-10. SUCCESS METRICS
-    - Technical KPIs (uptime, performance)
-    - Business KPIs (revenue, customer acquisition)
-    - Operational KPIs (cost efficiency)
-Provide specific, actionable recommendations based on the project type and current LEO market conditions. Include realistic timelines, cost estimates, and partner recommendations. Focus on near-term feasibility (12-36 months) and sustainable business models.`;
+- Budget: ${budget || "Not specified"}
+- Timeline: ${timeline || "Not specified"}
+- Target Partners / Ecosystem Categories: ${
+      partners.length ? partners.join(", ") : "Not specified"
+    }
 
-    // Ollama settings
-    const ollamaUrl = process.env.OLLAMA_URL || "http://127.0.0.1:11434";
-    const model = (modelOverride && String(modelOverride)) || process.env.OLLAMA_MODEL || "llama3";
+The proposal should be structured with headings and bullet points, covering at least:
 
-    const resp = await fetch(`${ollamaUrl}/api/generate`, {
+1. Executive Summary
+2. Problem & Opportunity
+3. Mission Concept & Architecture (orbit regime, constellation approach, payload concept if relevant)
+4. Target Market & Customers
+5. Revenue Model & Pricing Considerations
+6. Technical Risks & Mitigations (including debris, lifetime, licensing, and regulatory notes)
+7. Partner & Ecosystem Fit (how the mentioned categories/partners might fit in)
+8. Phased Roadmap (near-term, mid-term, long-term)
+9. Sustainability & Compliance (debris, deorbit, safety, etc.)
+
+Use concise, business-ready language suitable for slides or a PDF proposal.
+Do NOT include any markdown syntax, just plain text paragraphs and bullet-like lines.
+    `.trim();
+
+    // Call OpenAI chat completions API
+    const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model, prompt, stream: false }),
+      headers: {
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: OPENAI_MODEL,
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are an expert in commercial space, LEO constellations, and satellite mission design. You write clear, structured business proposals.",
+          },
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+        temperature: 0.4,
+        max_tokens: 1200,
+      }),
     });
 
-    if (!resp.ok) {
-      const text = await resp.text();
-      return NextResponse.json({ error: "LLM request failed", details: text }, { status: 502 });
+    if (!openaiRes.ok) {
+      const errJson = await openaiRes.json().catch(() => null);
+      console.error("[/api/business] OpenAI error:", openaiRes.status, errJson);
+      return NextResponse.json(
+        {
+          error:
+            errJson?.error?.message ||
+            `OpenAI API request failed with status ${openaiRes.status}`,
+        },
+        { status: 500 }
+      );
     }
 
-    // Robust extraction of model output (handles several possible shapes)
-    const data = await resp.json().catch(() => null);
-    let result = "";
+    const json = await openaiRes.json();
+    const result: string =
+      json.choices?.[0]?.message?.content?.trim() ||
+      "No proposal text was generated.";
 
-    if (!data) {
-      // fallback to plain text if parsing failed
-      try {
-        result = await resp.text();
-      } catch {
-        result = "";
-      }
-    } else if (typeof data === "string") {
-      result = data;
-    } else if (typeof data.text === "string") {
-      result = data.text;
-    } else if (typeof data.response === "string") {
-      result = data.response;
-    } else if (Array.isArray(data.output) && data.output.length) {
-      result = data.output
-        .map((o: any) => (typeof o === "string" ? o : o.content ?? o.text ?? JSON.stringify(o)))
-        .join("\n\n");
-    } else {
-      result = JSON.stringify(data);
-    }
-
+    return NextResponse.json({ result });
+  } catch (err) {
+    console.error("[/api/business] Unexpected error:", err);
     return NextResponse.json(
-      {
-        result,
-        projectName,
-        projectType,
-        timestamp: new Date().toISOString(),
-      },
-      { status: 200 }
+      { error: "Unexpected server error while generating proposal." },
+      { status: 500 }
     );
-  } catch (e: unknown) {
-    const details = e instanceof Error ? e.message : String(e);
-    return NextResponse.json({ error: "Bad request or LLM error", details }, { status: 500 });
   }
-}
-
-export async function GET() {
-  return NextResponse.json({
-    ok: true,
-    endpoint: "POST /api/business",
-    description: "Generate LEO commercialization business proposals using LLM",
-  });
 }

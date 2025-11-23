@@ -13,8 +13,9 @@ interface FormState {
   partners: string[];
 }
 
-export default function BusinessPage() {
+export default function BusinessPage(): React.ReactElement {
   const { data: session, status } = useSession();
+
   const [formData, setFormData] = useState<FormState>({
     projectName: "",
     projectType: "",
@@ -82,7 +83,7 @@ export default function BusinessPage() {
   ];
 
   // -------------------------------------------
-  // Example Missions
+  // Reference Missions
   // -------------------------------------------
 
   const exampleProjects = [
@@ -136,7 +137,7 @@ export default function BusinessPage() {
   };
 
   // -------------------------------------------
-  // LLM Business Proposal Generator (Ollama via /api/business)
+  // LLM Business Proposal Generator (OpenAI via /api/business)
   // -------------------------------------------
 
   const generateProposal = async () => {
@@ -204,13 +205,13 @@ export default function BusinessPage() {
 
       doc.setFontSize(10);
       doc.setFont("helvetica", "normal");
-      doc.text(`Project Name: ${formData.projectName}`, margin, yPosition);
+      doc.text(`Project Name: ${formData.projectName || "N/A"}`, margin, yPosition);
       yPosition += 6;
-      doc.text(`Project Type: ${formData.projectType}`, margin, yPosition);
+      doc.text(`Project Type: ${formData.projectType || "N/A"}`, margin, yPosition);
       yPosition += 6;
-      doc.text(`Budget: ${formData.budget}`, margin, yPosition);
+      doc.text(`Budget: ${formData.budget || "N/A"}`, margin, yPosition);
       yPosition += 6;
-      doc.text(`Timeline: ${formData.timeline}`, margin, yPosition);
+      doc.text(`Timeline: ${formData.timeline || "N/A"}`, margin, yPosition);
       yPosition += 6;
 
       if (formData.partners.length > 0) {
@@ -249,7 +250,10 @@ export default function BusinessPage() {
       const safeName = formData.projectName.trim() || "Spacia_Proposal";
       doc.save(`${safeName.replace(/\s+/g, "_")}_Business_Proposal.pdf`);
     } catch (err) {
-      setError("Failed to generate PDF: " + (err instanceof Error ? err.message : "Unknown error"));
+      setError(
+        "Failed to generate PDF: " +
+        (err instanceof Error ? err.message : "Unknown error")
+      );
     }
   };
 
@@ -257,12 +261,11 @@ export default function BusinessPage() {
   // UI
   // -------------------------------------------
 
+  const formDisabled = !session;
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 text-space-text-main">
-      {/* --------------------------------------- */}
       {/* Page Header */}
-      {/* --------------------------------------- */}
-
       <h1 className="text-4xl font-bold text-space-text-heading">Business</h1>
       <p className="mt-4 max-w-3xl leading-relaxed text-space-text-main">
         Spacia enables mission teams to visualize orbital activity, assess conjunction risks,
@@ -270,16 +273,13 @@ export default function BusinessPage() {
         commercial mission proposals tailored to your objectives.
       </p>
 
-      {/* --------------------------------------- */}
       {/* AI Generator Section */}
-      {/* --------------------------------------- */}
-
       <div className="mt-10 rounded-lg border border-space-border bg-space-section p-8">
         <h2 className="text-2xl font-semibold text-space-text-heading">
           AI-Powered LEO Project Proposal Generator
         </h2>
         <p className="text-sm text-space-text-muted mt-1">
-          Generate a detailed commercial mission blueprint using our AI engine.
+          Generate a detailed commercial mission blueprint using our AI engine (OpenAI GPT-4o).
         </p>
 
         {/* Authentication Check */}
@@ -302,8 +302,8 @@ export default function BusinessPage() {
               <div>
                 <h3 className="text-lg font-semibold text-yellow-400">Authentication Required</h3>
                 <p className="text-yellow-200 mt-1">
-                  Please sign in to use the AI-powered business proposal generator. This feature requires authentication
-                  to ensure secure access.
+                  Please sign in to use the AI-powered business proposal generator. This feature
+                  requires authentication to ensure secure access and prevent abuse.
                 </p>
                 <button
                   onClick={() => signIn("github")}
@@ -318,19 +318,21 @@ export default function BusinessPage() {
 
         {/* Form */}
         <div
-          className={`mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 ${!session ? "opacity-50 pointer-events-none" : ""
+          className={`mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 ${formDisabled ? "opacity-50 pointer-events-none" : ""
             }`}
         >
           {/* Project Name */}
           <div>
-            <label className="text-sm text-space-text-muted mb-2 block">Project Name *</label>
+            <label className="text-sm text-space-text-muted mb-2 block">
+              Project Name *
+            </label>
             <input
               type="text"
               name="projectName"
               value={formData.projectName}
               onChange={handleChange}
               placeholder="e.g., IndiaComm Constellation"
-              disabled={!session}
+              disabled={formDisabled}
               className="w-full px-4 py-2.5 bg-space-card border border-space-border rounded text-white 
               focus:border-space-border-hover outline-none disabled:cursor-not-allowed"
             />
@@ -338,12 +340,14 @@ export default function BusinessPage() {
 
           {/* Project Type */}
           <div>
-            <label className="text-sm text-space-text-muted mb-2 block">Project Type *</label>
+            <label className="text-sm text-space-text-muted mb-2 block">
+              Project Type *
+            </label>
             <select
               name="projectType"
               value={formData.projectType}
               onChange={handleChange}
-              disabled={!session}
+              disabled={formDisabled}
               className="w-full px-4 py-2.5 bg-space-card border border-space-border rounded text-white 
               focus:border-space-border-hover outline-none disabled:cursor-not-allowed"
             >
@@ -358,14 +362,16 @@ export default function BusinessPage() {
 
           {/* Budget */}
           <div>
-            <label className="text-sm text-space-text-muted mb-2 block">Budget (USD)</label>
+            <label className="text-sm text-space-text-muted mb-2 block">
+              Budget (USD)
+            </label>
             <input
               type="text"
               name="budget"
               value={formData.budget}
               onChange={handleChange}
               placeholder="$50M – $100M"
-              disabled={!session}
+              disabled={formDisabled}
               className="w-full px-4 py-2.5 bg-space-card border border-space-border rounded text-white 
               focus:border-space-border-hover outline-none disabled:cursor-not-allowed"
             />
@@ -373,14 +379,16 @@ export default function BusinessPage() {
 
           {/* Timeline */}
           <div>
-            <label className="text-sm text-space-text-muted mb-2 block">Timeline</label>
+            <label className="text-sm text-space-text-muted mb-2 block">
+              Timeline
+            </label>
             <input
               type="text"
               name="timeline"
               value={formData.timeline}
               onChange={handleChange}
               placeholder="24–36 months"
-              disabled={!session}
+              disabled={formDisabled}
               className="w-full px-4 py-2.5 bg-space-card border border-space-border rounded text-white 
               focus:border-space-border-hover outline-none disabled:cursor-not-allowed"
             />
@@ -388,14 +396,16 @@ export default function BusinessPage() {
 
           {/* Description */}
           <div className="md:col-span-2">
-            <label className="text-sm text-space-text-muted mb-2 block">Mission Description *</label>
+            <label className="text-sm text-space-text-muted mb-2 block">
+              Mission Description *
+            </label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
               rows={5}
               placeholder="Describe mission objectives, target market, constellation design, operational goals..."
-              disabled={!session}
+              disabled={formDisabled}
               className="w-full px-4 py-2.5 bg-space-card border border-space-border rounded text-white 
               focus:border-space-border-hover outline-none resize-none disabled:cursor-not-allowed"
             />
@@ -407,7 +417,7 @@ export default function BusinessPage() {
           <button
             onClick={generateProposal}
             disabled={
-              !session ||
+              formDisabled ||
               isGenerating ||
               !formData.projectName ||
               !formData.projectType ||
@@ -422,7 +432,7 @@ export default function BusinessPage() {
           {llmResponse && (
             <button
               onClick={generatePDF}
-              disabled={!session}
+              disabled={formDisabled}
               className="px-6 py-2.5 bg-space-card border border-space-border text-white font-medium rounded 
               hover:border-space-border-hover transition disabled:bg-space-border disabled:text-space-text-muted disabled:cursor-not-allowed"
             >
@@ -458,8 +468,12 @@ export default function BusinessPage() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-white">AI-Generated Business Proposal</h3>
-                <p className="text-xs text-space-text-muted mt-1">Powered by Llama via Ollama</p>
+                <h3 className="text-lg font-semibold text-white">
+                  AI-Generated Business Proposal
+                </h3>
+                <p className="text-xs text-space-text-muted mt-1">
+                  Powered by OpenAI (GPT-4o)
+                </p>
               </div>
             </div>
             <div className="prose prose-invert prose-sm max-w-none">
@@ -471,12 +485,11 @@ export default function BusinessPage() {
         )}
       </div>
 
-      {/* --------------------------------------- */}
-      {/* Example Missions */}
-      {/* --------------------------------------- */}
-
+      {/* Reference Missions */}
       <div className="mt-14">
-        <h2 className="text-2xl font-semibold text-space-text-heading">Reference Missions</h2>
+        <h2 className="text-2xl font-semibold text-space-text-heading">
+          Reference Missions
+        </h2>
         <p className="mt-2 text-space-text-main max-w-3xl">
           Explore proven commercial LEO missions to guide your strategy.
         </p>
@@ -489,8 +502,12 @@ export default function BusinessPage() {
             >
               <div className="flex justify-between">
                 <div>
-                  <div className="text-lg font-semibold text-white">{project.name}</div>
-                  <div className="text-sm text-space-text-muted">{project.type}</div>
+                  <div className="text-lg font-semibold text-white">
+                    {project.name}
+                  </div>
+                  <div className="text-sm text-space-text-muted">
+                    {project.type}
+                  </div>
                 </div>
                 <div className="text-xs text-space-text-soft text-right">
                   <div className="border border-space-border px-2 py-1 rounded bg-space-card">
@@ -501,16 +518,15 @@ export default function BusinessPage() {
                   </div>
                 </div>
               </div>
-              <p className="text-sm text-space-text-main mt-3 leading-relaxed">{project.desc}</p>
+              <p className="text-sm text-space-text-main mt-3 leading-relaxed">
+                {project.desc}
+              </p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* --------------------------------------- */}
       {/* Services */}
-      {/* --------------------------------------- */}
-
       <div className="mt-14">
         <h2 className="text-2xl font-semibold text-space-text-heading">Our Services</h2>
 
@@ -527,14 +543,14 @@ export default function BusinessPage() {
         </div>
       </div>
 
-      {/* --------------------------------------- */}
       {/* Partner Ecosystem */}
-      {/* --------------------------------------- */}
-
       <div className="mt-14">
-        <h2 className="text-2xl font-semibold text-space-text-heading">Partner Ecosystem</h2>
+        <h2 className="text-2xl font-semibold text-space-text-heading">
+          Partner Ecosystem
+        </h2>
         <p className="mt-2 text-space-text-main max-w-3xl">
-          Representative organizations operating in LEO. Availability and mission compatibility may vary.
+          Representative organizations operating in LEO. Availability and mission
+          compatibility may vary.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
@@ -550,24 +566,29 @@ export default function BusinessPage() {
                   }`}
               >
                 <div className="flex justify-between items-start">
-                  <div className="text-lg font-semibold text-white">{item.category}</div>
+                  <div className="text-lg font-semibold text-white">
+                    {item.category}
+                  </div>
                   {selected && (
-                    <svg className="w-5 h-5 text-space-text-main" fill="currentColor" viewBox="0 0 20 20">
+                    <svg
+                      className="w-5 h-5 text-space-text-main"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
                       <path d="M16.7 5.3a1 1 0 00-1.4 0L8 12.6 4.7 9.3a1 1 0 10-1.4 1.4l4 4a1 1 0 001.4 0l8-8a1 1 0 000-1.4z" />
                     </svg>
                   )}
                 </div>
-                <p className="text-sm text-space-text-main mt-2">{item.companies}</p>
+                <p className="text-sm text-space-text-main mt-2">
+                  {item.companies}
+                </p>
               </div>
             );
           })}
         </div>
       </div>
 
-      {/* --------------------------------------- */}
       {/* CTA */}
-      {/* --------------------------------------- */}
-
       <div className="mt-16 p-8 rounded-lg border border-space-border bg-space-section text-center">
         <h2 className="text-xl font-semibold text-white">Work With Us</h2>
         <p className="text-space-text-main mt-2">
