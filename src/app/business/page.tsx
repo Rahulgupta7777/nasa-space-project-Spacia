@@ -469,11 +469,9 @@ export default function BusinessPage(): React.ReactElement {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-white">
-                  AI-Generated Business Proposal
+                  Generated Business Proposal
                 </h3>
-                <p className="text-xs text-space-text-muted mt-1">
-                  Powered by OpenAI (GPT-4o)
-                </p>
+
               </div>
             </div>
             <div className="prose prose-invert prose-sm max-w-none">
