@@ -1,14 +1,16 @@
-# 🛰️ Spacia
+# Spacia - LEO Business & Operations Platform
 
-> **AI-Powered Space Traffic Control & LEO Mission Planning Platform**
+## Problem Statement
+As the commercialization of space rapidly accelerates, the future of business in low Earth orbit (LEO) holds incredible potential, but also presents significant operational, regulatory, and environmental challenges. This new economic frontier invites innovative and sustainable approaches to foster long-term viability and responsible execution. Your challenge is to conceptualize and design a scalable, sustainable, business model, accompanied by a prototype, that explores the unique opportunities LEO offers while addressing the complexities of operating in space. (Joint Agency Satellite Division)
 
-Spacia is a comprehensive Next.js 15 SaaS platform that safeguards Low Earth Orbit (LEO) operations through real-time satellite tracking, collision prediction, space weather monitoring, and AI-driven mission planning. Built with modern web technologies and powered by local AI models, Spacia provides space operators with the tools they need for safe and sustainable orbital operations.
+## Project Video
+[Watch the Video](https://drive.google.com/file/d/1Wkv_pZ3fWeAM2SeOe6yKeXC_lzZI-MBa/view?usp=sharing)
 
 ---
 
 ## 📋 Table of Contents
 
-- [Key Features](#-key-features)
+- [Page Highlights](#-page-highlights)
 - [Platform Flow](#-platform-flow)
 - [Tech Stack](#-tech-stack)
 - [Project Structure](#-project-structure)
@@ -17,55 +19,49 @@ Spacia is a comprehensive Next.js 15 SaaS platform that safeguards Low Earth Orb
 - [API Reference](#-api-reference)
 - [Security & Privacy](#-security--privacy)
 - [Troubleshooting](#-troubleshooting)
-- [Roadmap](#-roadmap)
 - [License](#-license)
 
 ---
 
-## ✨ Key Features
+## ✨ Page Highlights
 
-### 🌍 Real-Time 3D Visualization
-- **Interactive Earth Globe**: 3D visualization powered by Three.js showing Earth, satellites, and debris
-- **LEO Object Tracking**: Real-time tracking of 13,000+ satellites and 28,000+ debris objects
-- **Risk Zone Visualization**: Visual representation of high-density orbital zones
-- **Interactive Controls**: Rotate, zoom, and explore orbital dynamics
+### 🏠 Home Page
+**Location**: `src/app/page.tsx`
+The landing page introduces the Spacia platform with a high-impact visual experience.
+- **Hero Section**: Features an `AnimatedHero` component that engages users immediately.
+- **Live Preview**: Includes a `MiniDashboard` to give a glimpse of the real-time tracking capabilities.
+- **Features Overview**: Showcases key platform pillars using `PillarsSection` and `WorldviewShowcase`.
 
-### 🛰️ Space Weather Monitoring
-- **Solar Activity Tracking**: Real-time solar flare monitoring (X, M, C-class events)
-- **Geomagnetic Storm Alerts**: Kp Index tracking with 24-72 hour forecasts
-- **Solar Wind Analysis**: Speed, density, temperature, and magnetic field monitoring
-- **Coronal Mass Ejection (CME) Detection**: CME tracking with Earth-impact predictions
-- **Aurora Forecasts**: Northern/Southern lights visibility predictions
-- **Impact Assessment**: Detailed impact analysis for satellites, aviation, power grids, and communications
-- **Proton Event Monitoring**: Solar radiation storm tracking for astronaut safety
+### 🌍 Dashboard (3D Earth View)
+**Location**: `src/app/dashboard/page.tsx`
+The core of the platform, offering a comprehensive view of the orbital environment.
+- **Interactive Globe**: Powered by the `EarthView` component, rendering a 3D Earth with real-time satellite and debris data.
+- **Real-Time Tracking**: Visualizes over 13,000 satellites and 28,000 debris objects.
+- **Risk Zones**: Highlights high-density areas and potential collision risks.
+- **Controls**: Users can filter objects, view orbits, and inspect specific satellites.
 
-### 🚀 Launch Planning & Orbit Analysis
-- **Launch Site Feasibility**: Analysis of launch sites based on latitude and desired inclination
-- **Debris Risk Assessment**: Orbit-specific collision risk scoring
-- **Lifetime Estimation**: Orbital decay predictions with solar cycle considerations
-- **25-Year Rule Compliance**: Automatic compliance checking for satellite deorbiting
-- **Azimuth Range Calculations**: Optimal launch window recommendations
-- **Alternative Site Suggestions**: Smart recommendations for optimal launch locations
+### ☀️ Space Weather
+**Location**: `src/app/spaceweather/page.tsx`
+A dedicated dashboard for monitoring solar and geomagnetic conditions that impact space operations.
+- **Solar Activity**: Tracks solar flares and solar wind data.
+- **Impact Analysis**: Assesses risks to satellites, communications, and power grids.
+- **Visualizations**: Uses charts and data feeds to present complex weather data clearly.
 
-### 🤖 AI-Powered Business Advisor
-- **Mission Feasibility Analysis**: AI-driven assessment of commercial viability
-- **Partner Ecosystem Matching**: Connect with relevant space industry partners
-- **Proposal Generation**: Automated business proposal creation using Llama3
-- **PDF Export**: Professional proposal documents for stakeholders
-- **Market Intelligence**: Insights on LEO commercialization opportunities
+### 🚀 Launch Planner
+**Location**: `src/app/planner/page.tsx`
+A critical tool for mission planning and orbit analysis.
+- **Feasibility Checks**: Validates launch sites against desired orbital inclinations.
+- **Debris Risk Assessment**: Calculates collision risks for specific altitudes using the `LaunchPlanner` component.
+- **Lifetime Estimation**: Predicts orbital decay and ensures compliance with the 25-year deorbit rule.
+- **3D Preview**: Visualizes the planned orbit using `OrbitalGlobe`.
 
-### 📡 Earth Observation Integration
-- **NASA GIBS Imagery**: Direct access to NASA's Global Imagery Browse Services
-- **MODIS/VIIRS Data**: Multi-spectral Earth observation layers
-- **WMTS/WMS Support**: Industry-standard geospatial protocols
-- **Time-Series Analysis**: Historical imagery comparison capabilities
-
-### 🔐 Enterprise Features
-- **GitHub OAuth Authentication**: Secure user authentication via NextAuth
-- **Session Management**: Protected routes and user-specific data
-- **API Rate Limiting**: Built-in protection for external API calls
-- **Data Caching**: 15-minute cache TTL for optimal performance
-- **Privacy-First AI**: Local Ollama inference - no data leaves your infrastructure
+### 💼 Business Advisor
+**Location**: `src/app/business/page.tsx`
+An AI-powered module designed to assist with the commercial aspects of space missions.
+- **AI Integration**: Utilizes **any llm model** to generate insights and proposals.
+- **Mission Feasibility**: Analyzes the viability of proposed space business models.
+- **Proposal Generation**: Automatically creates detailed business proposals, which can be exported to PDF.
+- **Partner Ecosystem**: Suggests relevant industry partners for launch, ground stations, and insurance.
 
 ---
 
@@ -108,8 +104,8 @@ flowchart TB
 - **Satellite.js**: TLE orbit propagation and calculations
 
 ### AI & Machine Learning
-- **Ollama**: Local LLM inference server
-- **Llama3**: Default model for business proposal generation
+- **LLM Server**: Local or remote LLM inference server (e.g., any llm model)
+- **Model**: Configurable model for business proposal generation
 - **Private Inference**: All AI processing happens on your infrastructure
 
 ### Backend & APIs
@@ -186,7 +182,7 @@ nasa-space-project-Spacia/
     │       ├── weather/
     │       │   └── route.ts            # Space weather aggregation
     │       ├── business/
-    │       │   └── route.ts            # Ollama LLM integration
+    │       │   └── route.ts            # LLM integration
     │       ├── planner/
     │       │   └── route.ts            # Orbit & launch analysis
     │       ├── alerts/
@@ -223,7 +219,7 @@ nasa-space-project-Spacia/
 
 - **Node.js**: v18 or higher
 - **npm**: v9 or higher
-- **Ollama** (optional for AI features): [Install Ollama](https://ollama.ai/)
+- **LLM Provider** (optional for AI features): Any LLM model server
 - **NASA API Key** (optional): [Get API Key](https://api.nasa.gov/)
 
 ### Installation
@@ -246,9 +242,9 @@ npm install
 Create a `.env.local` file in the root directory:
 
 ```env
-# Ollama Configuration (for AI Business Advisor)
-OLLAMA_URL=http://localhost:11434
-OLLAMA_MODEL=llama3
+# LLM Configuration (for AI Business Advisor)
+LLM_URL=http://localhost:11434
+LLM_MODEL=any-llm-model
 
 # NextAuth Configuration
 NEXTAUTH_SECRET=your-secret-key-here-generate-with-openssl-rand-base64-32
@@ -262,18 +258,9 @@ GITHUB_SECRET=your-github-oauth-client-secret
 NASA_API_KEY=your-nasa-api-key
 ```
 
-4. **Set up Ollama (Optional - for AI features)**
+4. **Set up LLM (Optional - for AI features)**
 
-```bash
-# Install Ollama (macOS)
-brew install ollama
-
-# Start Ollama server
-ollama serve
-
-# Pull Llama3 model
-ollama pull llama3
-```
+Ensure you have access to any LLM model server.
 
 5. **Run development server**
 
@@ -389,7 +376,7 @@ npm start
 - **PDF Export**: Professional documents via jsPDF
 - **Authentication Required**: Protected by NextAuth
 
-**Technology**: Ollama + Llama3, runs 100% locally
+**Technology**: Any LLM model, runs 100% locally or remotely
 
 ### 5. Earth Observation
 
@@ -527,7 +514,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
   "budget": "$50M - $100M",
   "timeline": "24-36 months",
   "partners": ["Ground Stations", "Launch Services"],
-  "model": "llama3"
+  "model": "any-llm-model"
 }
 ```
 
@@ -586,7 +573,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 - **Protected Routes**: Business advisor requires authentication
 
 ### AI Privacy
-- **Local Inference**: Ollama runs on your infrastructure
+- **Local Inference**: LLM runs on your infrastructure
 - **No Data Leakage**: Mission data never leaves your network
 - **Model Isolation**: Each session is independent
 
@@ -605,16 +592,15 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 
 ## 🔧 Troubleshooting
 
-### Ollama Connection Issues
+### LLM Connection Issues
 
-**Problem**: "Failed to connect to Ollama server"
+**Problem**: "Failed to connect to LLM server"
 
 **Solutions**:
-1. Ensure Ollama is running: `ollama serve`
-2. Verify `OLLAMA_URL` in `.env.local` matches server address
-3. Check Ollama is accessible: `curl http://localhost:11434/api/tags`
-4. Pull the model: `ollama pull llama3`
-5. Restart Next.js dev server after Ollama changes
+1. Ensure LLM server is running
+2. Verify `LLM_URL` in `.env.local` matches server address
+3. Check LLM is accessible
+4. Restart Next.js dev server after LLM changes
 
 ### CesiumJS Loading Errors
 
@@ -667,34 +653,6 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 3. Ensure `NEXTAUTH_URL` matches your deployment URL
 4. Add authorized callback URL: `http://localhost:3000/api/auth/callback/github`
 5. Regenerate `NEXTAUTH_SECRET`: `openssl rand -base64 32`
-
----
-
-## 🗺️ Roadmap
-
-### Q1 2026
-- [ ] **Historical Playback**: Rewind/replay orbital events
-- [ ] **Custom Notifications**: Email/SMS alerts for conjunctions
-- [ ] **Multi-Language Support**: i18n implementation
-- [ ] **Mobile App**: React Native companion app
-
-### Q2 2026
-- [ ] **Advanced Collision Prediction**: ML-based trajectory forecasting
-- [ ] **Maneuver Planning**: Delta-V calculation and optimization
-- [ ] **Integration APIs**: Webhooks for external systems
-- [ ] **Team Collaboration**: Multi-user workspaces
-
-### Q3 2026
-- [ ] **Satellite Operator Portal**: Direct submissions from operators
-- [ ] **Regulatory Compliance**: Automated FCC/ITU filing assistance
-- [ ] **Insurance Integration**: Risk metrics for space insurance
-- [ ] **Marketplace**: Connect operators with service providers
-
-### Future
-- [ ] **Quantum-Safe Encryption**: Post-quantum cryptography
-- [ ] **Edge Computing**: Distributed processing nodes
-- [ ] **AR/VR Visualization**: Immersive orbital environment
-- [ ] **Autonomous Collision Avoidance**: AI-driven maneuver execution
 
 ---
 
@@ -753,7 +711,7 @@ Contributions are welcome! Please follow these guidelines:
 - **NOAA**: Space Weather Prediction Center data
 - **CelesTrak**: TLE orbital element sets
 - **CesiumJS**: 3D geospatial platform
-- **Ollama**: Local LLM inference
+- **LLM Provider**: Local LLM inference
 - **Next.js Team**: Amazing React framework
 - **Space Community**: Feedback and support
 
@@ -766,13 +724,3 @@ Contributions are welcome! Please follow these guidelines:
 - **Discussions**: [GitHub Discussions](https://github.com/Rahulgupta7777/nasa-space-project-Spacia/discussions)
 
 ---
-
-<div align="center">
-
-**Developed with ⚡ by the Spacia Team**
-
-*Safeguarding the Future of Space Operations*
-
-[🌐 Visit Website](https://spacia.space) • [📚 Documentation](https://docs.spacia.space) • [🚀 Get Started](#-getting-started)
-
-</div>
