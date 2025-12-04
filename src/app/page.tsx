@@ -18,12 +18,12 @@ export default function Home() {
 
           <aside className="lg:col-span-5 hidden lg:block">
             <a href="/dashboard" className="block">
-            <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-4 shadow-lg">
-              <h3 className="text-sm font-semibold text-slate-200 mb-3">
-                Live Debris Worldview Preview
-              </h3>
-              <MiniDashboardPreview />
-            </div>
+              <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-4 shadow-lg">
+                <h3 className="text-sm font-semibold text-slate-200 mb-3">
+                  Live Debris Worldview Preview
+                </h3>
+                <MiniDashboardPreview />
+              </div>
             </a>
           </aside>
         </div>
