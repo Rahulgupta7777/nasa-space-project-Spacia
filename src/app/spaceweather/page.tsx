@@ -3,22 +3,22 @@
 import { useEffect, useState } from "react";
 
 // Component imports
-import LoadingState from "@/components/spaceweather/ui/LoadingState";
-import ErrorState from "@/components/spaceweather/ui/ErrorState";
-import Header from "@/components/spaceweather/sections/Header";
-import SummaryAlert from "@/components/spaceweather/sections/SummaryAlert";
-import MetricsGrid from "@/components/spaceweather/sections/MetricsGrid";
-import CoronalMassEjectionCard from "@/components/spaceweather/cards/CoronalMassEjectionCard";
-import KpForecastChart from "@/components/spaceweather/charts/KpForecastChart";
-import SolarWindChart from "@/components/spaceweather/charts/SolarWindChart";
-import AuroraForecast from "@/components/spaceweather/sections/AuroraForecast";
-import TimeLine from "@/components/spaceweather/sections/TimeLine";
-import ImpactAssessment from "@/components/spaceweather/sections/ImpactAssessment";
-import FlareStatistics from "@/components/spaceweather/sections/FlareStatistics";
-import Footer from "@/components/spaceweather/sections/Footer";
+import LoadingState from "./components/ui/LoadingState";
+import ErrorState from "./components/ui/ErrorState";
+import Header from "./components/sections/Header";
+import SummaryAlert from "./components/sections/SummaryAlert";
+import MetricsGrid from "./components/sections/MetricsGrid";
+import CoronalMassEjectionCard from "./components/cards/CoronalMassEjectionCard";
+import KpForecastChart from "./components/charts/KpForecastChart";
+import SolarWindChart from "./components/charts/SolarWindChart";
+import AuroraForecast from "./components/sections/AuroraForecast";
+import TimeLine from "./components/sections/TimeLine";
+import ImpactAssessment from "./components/sections/ImpactAssessment";
+import FlareStatistics from "./components/sections/FlareStatistics";
+import Footer from "./components/sections/Footer";
 
 // Type imports
-import { SpaceWeatherData } from "@/components/spaceweather/types";
+import { SpaceWeatherData } from "./components/types";
 
 export default function SpaceWeatherPage() {
   const [data, setData] = useState<SpaceWeatherData | null>(null);
