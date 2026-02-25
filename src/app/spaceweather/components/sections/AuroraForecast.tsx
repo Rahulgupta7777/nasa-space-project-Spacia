@@ -23,22 +23,22 @@ export default function AuroraForecast({ aurora }: AuroraForecastProps) {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <p className="text-xs text-gray-400 mb-1">Visibility</p>
+                    <p className="text-xs text-space-text-muted mb-1">Visibility</p>
                     <p className="text-2xl font-bold text-green-400">{aurora.visibility}</p>
-                    <p className="text-xs text-gray-500 mt-1">{aurora.intensity}</p>
+                    <p className="text-xs text-space-text-soft mt-1">{aurora.intensity}</p>
                 </div>
                 <div>
-                    <p className="text-xs text-gray-400 mb-1">Latitude / Probability</p>
-                    <p className="text-sm text-gray-300">{aurora.latitude}</p>
-                    <p className="text-sm text-gray-300">High Lat: {aurora.probabilityHigh}</p>
-                    <p className="text-sm text-gray-300">Mid Lat: {aurora.probabilityMid}</p>
+                    <p className="text-xs text-space-text-muted mb-1">Latitude / Probability</p>
+                    <p className="text-sm text-space-text-main">{aurora.latitude}</p>
+                    <p className="text-sm text-space-text-main">High Lat: {aurora.probabilityHigh}</p>
+                    <p className="text-sm text-space-text-main">Mid Lat: {aurora.probabilityMid}</p>
                 </div>
                 <div>
-                    <p className="text-xs text-gray-400 mb-1">Expected Colors & Timing</p>
-                    <p className="text-sm text-gray-300">
+                    <p className="text-xs text-space-text-muted mb-1">Expected Colors & Timing</p>
+                    <p className="text-sm text-space-text-main">
                         {aurora.colors.join(", ")}
                     </p>
-                    <p className="text-sm text-gray-300 mt-1">
+                    <p className="text-sm text-space-text-main mt-1">
                         Best viewing: {aurora.bestViewingTime}
                     </p>
                 </div>

@@ -11,7 +11,7 @@ export default function Header({ timestamp, dataSources }: HeaderProps) {
             <div className="flex items-center justify-center gap-3">
                 <h1 className="text-4xl font-bold text-white">Space Weather Dashboard</h1>
             </div>
-            <p className="text-gray-400 text-sm flex items-center justify-center gap-2">
+            <p className="text-space-text-muted text-sm flex items-center justify-center gap-2">
                 <Activity className="w-4 h-4" />
                 Real-time data from {dataSources.join(", ")} — updated{" "}
                 {new Date(timestamp).toLocaleString()}

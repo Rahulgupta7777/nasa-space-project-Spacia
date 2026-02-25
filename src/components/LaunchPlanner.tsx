@@ -124,43 +124,43 @@ export default function LaunchPlanner() {
   };
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-10">
-      <h1 className="text-3xl sm:text-4xl font-bold">Launch Planner</h1>
-      <p className="mt-2 text-slate-300">Plan a responsible LEO mission: estimate lifetime, assess debris risk, and get site suggestions.</p>
+    <section className="mx-auto max-w-6xl px-4 py-12 text-space-text-main">
+      <h1 className="text-4xl font-bold text-space-text-heading">Launch Planner</h1>
+      <p className="mt-4 max-w-3xl leading-relaxed text-space-text-main">Plan a responsible LEO mission: estimate lifetime, assess debris risk, and get site suggestions.</p>
 
       <form onSubmit={submit} className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="glass-panel rounded-lg border border-slate-800/60 p-5">
+        <div className="rounded-lg border border-space-border bg-space-section p-6">
           <div className="text-lg font-semibold mb-4">Launch Site</div>
           <label className="block text-sm mb-2">Latitude (deg)
-            <input type="number" step="0.0001" className="mt-1 w-full rounded bg-slate-900/40 border border-slate-700 p-2" value={form.siteLat} onChange={(e) => update("siteLat", parseFloat(e.target.value))} />
+            <input type="number" step="0.0001" className="mt-1 w-full rounded bg-space-card border border-space-border focus:border-space-border-hover outline-none text-white p-2" value={form.siteLat} onChange={(e) => update("siteLat", parseFloat(e.target.value))} />
           </label>
           <label className="block text-sm mb-2">Longitude (deg)
-            <input type="number" step="0.0001" className="mt-1 w-full rounded bg-slate-900/40 border border-slate-700 p-2" value={form.siteLon} onChange={(e) => update("siteLon", parseFloat(e.target.value))} />
+            <input type="number" step="0.0001" className="mt-1 w-full rounded bg-space-card border border-space-border focus:border-space-border-hover outline-none text-white p-2" value={form.siteLon} onChange={(e) => update("siteLon", parseFloat(e.target.value))} />
           </label>
         </div>
 
-        <div className="glass-panel rounded-lg border border-slate-800/60 p-5">
+        <div className="rounded-lg border border-space-border bg-space-section p-6">
           <div className="text-lg font-semibold mb-4">Orbit</div>
           <label className="block text-sm mb-2">Altitude (km)
-            <input type="number" min={160} max={2000} className="mt-1 w-full rounded bg-slate-900/40 border border-slate-700 p-2" value={form.altitudeKm} onChange={(e) => update("altitudeKm", parseFloat(e.target.value))} />
+            <input type="number" min={160} max={2000} className="mt-1 w-full rounded bg-space-card border border-space-border focus:border-space-border-hover outline-none text-white p-2" value={form.altitudeKm} onChange={(e) => update("altitudeKm", parseFloat(e.target.value))} />
           </label>
           <label className="block text-sm mb-2">Inclination (deg)
-            <input type="number" min={0} max={180} className="mt-1 w-full rounded bg-slate-900/40 border border-slate-700 p-2" value={form.inclinationDeg} onChange={(e) => update("inclinationDeg", parseFloat(e.target.value))} />
+            <input type="number" min={0} max={180} className="mt-1 w-full rounded bg-space-card border border-space-border focus:border-space-border-hover outline-none text-white p-2" value={form.inclinationDeg} onChange={(e) => update("inclinationDeg", parseFloat(e.target.value))} />
           </label>
         </div>
 
-        <div className="glass-panel rounded-lg border border-slate-800/60 p-5">
+        <div className="rounded-lg border border-space-border bg-space-section p-6">
           <div className="text-lg font-semibold mb-4">Spacecraft</div>
           <label className="block text-sm mb-2">Mass (kg)
-            <input type="number" min={1} className="mt-1 w-full rounded bg-slate-900/40 border border-slate-700 p-2" value={form.massKg} onChange={(e) => update("massKg", parseFloat(e.target.value))} />
+            <input type="number" min={1} className="mt-1 w-full rounded bg-space-card border border-space-border focus:border-space-border-hover outline-none text-white p-2" value={form.massKg} onChange={(e) => update("massKg", parseFloat(e.target.value))} />
           </label>
           <label className="block text-sm mb-2">Cross-section Area (m²)
-            <input type="number" step="0.01" min={0.01} className="mt-1 w-full rounded bg-slate-900/40 border border-slate-700 p-2" value={form.areaM2} onChange={(e) => update("areaM2", parseFloat(e.target.value))} />
+            <input type="number" step="0.01" min={0.01} className="mt-1 w-full rounded bg-space-card border border-space-border focus:border-space-border-hover outline-none text-white p-2" value={form.areaM2} onChange={(e) => update("areaM2", parseFloat(e.target.value))} />
           </label>
         </div>
 
-        <div className="rounded-lg border border-slate-800/60 p-5 flex items-end justify-start">
-          <button type="submit" disabled={loading} className="button-primary">
+        <div className="rounded-lg border border-space-border p-5 flex items-end justify-start">
+          <button type="submit" disabled={loading} className="px-6 py-2.5 bg-white text-black font-medium rounded hover:bg-gray-200 transition">
             {loading ? "Calculating…" : "Calculate Plan"}
           </button>
         </div>
@@ -202,9 +202,9 @@ export default function LaunchPlanner() {
           )}
           <div className={`${result.siteAlert ? 'mt-6' : 'mt-8'} grid grid-cols-1 lg:grid-cols-2 gap-6`}>
             {/* Launch Site Analysis Card */}
-            <div className="glass-panel rounded-xl border border-slate-800/60 p-6 bg-gradient-to-br from-slate-900/50 to-slate-800/30">
+            <div className="rounded-lg border border-space-border bg-space-section p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-slate-100">Launch Site Analysis</h3>
+                <h3 className="text-xl font-bold text-white">Launch Site Analysis</h3>
                 <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                   result.launchSiteAnalysis.feasible
                     ? 'bg-green-500/20 border border-green-500/40 text-green-400'
@@ -216,27 +216,27 @@ export default function LaunchPlanner() {
               <div className="space-y-4">
                 {/* User Site */}
                 <div>
-                  <div className="text-sm text-slate-400 mb-2">Selected Site</div>
+                  <div className="text-sm text-space-text-muted mb-2">Selected Site</div>
                   <div className="text-lg font-bold text-cyan-400 mb-1">{result.launchSiteAnalysis.userSite}</div>
-                  <div className="text-xs text-slate-400 font-mono">
+                  <div className="text-xs text-space-text-muted font-mono">
                     {result.launchSiteAnalysis.userSiteLat.toFixed(3)}°N, {Math.abs(result.launchSiteAnalysis.userSiteLon).toFixed(3)}°{result.launchSiteAnalysis.userSiteLon < 0 ? 'W' : 'E'}
                   </div>
                 </div>
                 
-                <div className="pt-3 border-t border-slate-700/50">
-                  <div className="text-sm text-slate-400 mb-2">Launch Parameters</div>
+                <div className="pt-3 border-t border-space-border">
+                  <div className="text-sm text-space-text-muted mb-2">Launch Parameters</div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <div className="text-xs text-slate-500">Requested Inclination</div>
-                      <div className="text-slate-200 font-semibold">{result.launchSiteAnalysis.requestedInclination.toFixed(1)}°</div>
+                      <div className="text-xs text-space-text-muted">Requested Inclination</div>
+                      <div className="text-white font-semibold">{result.launchSiteAnalysis.requestedInclination.toFixed(1)}°</div>
                     </div>
                     <div>
-                      <div className="text-xs text-slate-500">Min Required</div>
-                      <div className="text-slate-200 font-semibold">{result.launchSiteAnalysis.minInclinationRequired.toFixed(1)}°</div>
+                      <div className="text-xs text-space-text-muted">Min Required</div>
+                      <div className="text-white font-semibold">{result.launchSiteAnalysis.minInclinationRequired.toFixed(1)}°</div>
                     </div>
                     <div className="col-span-2">
-                      <div className="text-xs text-slate-500">Azimuth Range</div>
-                      <div className="text-slate-200 font-semibold">
+                      <div className="text-xs text-space-text-muted">Azimuth Range</div>
+                      <div className="text-white font-semibold">
                         {result.launchSiteAnalysis.azimuthRange[0]}° - {result.launchSiteAnalysis.azimuthRange[1]}°
                       </div>
                     </div>
@@ -245,16 +245,16 @@ export default function LaunchPlanner() {
 
                 {/* Best Alternative */}
                 {!result.launchSiteAnalysis.feasible && (
-                  <div className="pt-3 border-t border-slate-700/50">
+                  <div className="pt-3 border-t border-space-border">
                     <div className="flex items-center justify-between mb-2">
-                      <div className="text-sm text-slate-400">Recommended Alternative</div>
+                      <div className="text-sm text-space-text-muted">Recommended Alternative</div>
                     </div>
-                    <div className="p-3 rounded-lg bg-slate-800/30 border border-slate-700/50">
+                    <div className="p-3 rounded-lg bg-space-card border border-space-border">
                       <div className="text-base font-bold text-purple-400 mb-1">{result.launchSiteAnalysis.bestAlternative.name}</div>
-                      <div className="text-xs text-slate-400 font-mono mb-2">
+                      <div className="text-xs text-space-text-muted font-mono mb-2">
                         {result.launchSiteAnalysis.bestAlternative.lat.toFixed(3)}°N, {Math.abs(result.launchSiteAnalysis.bestAlternative.lon).toFixed(3)}°{result.launchSiteAnalysis.bestAlternative.lon < 0 ? 'W' : 'E'}
                       </div>
-                      <div className="text-xs text-slate-500 mb-3">
+                      <div className="text-xs text-space-text-muted mb-3">
                         Min Inclination: {result.launchSiteAnalysis.bestAlternative.minIncl.toFixed(1)}° | 
                         Azimuth: {result.launchSiteAnalysis.bestAlternative.azimuthRange[0]}°-{result.launchSiteAnalysis.bestAlternative.azimuthRange[1]}°
                       </div>
@@ -293,9 +293,9 @@ export default function LaunchPlanner() {
             </div>
 
             {/* Debris Risk Card */}
-            <div className="glass-panel rounded-xl border border-slate-800/60 p-6 bg-gradient-to-br from-slate-900/50 to-slate-800/30">
+            <div className="rounded-lg border border-space-border bg-space-section p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-slate-100">Debris Risk Assessment</h3>
+                <h3 className="text-xl font-bold text-white">Debris Risk Assessment</h3>
                 <span className={`px-3 py-1 rounded-full text-xs font-semibold capitalize ${
                   result.debrisRisk.level === 'high' ? 'bg-red-500/20 border border-red-500/40 text-red-400' :
                   result.debrisRisk.level === 'moderate' ? 'bg-yellow-500/20 border border-yellow-500/40 text-yellow-400' :
@@ -307,8 +307,8 @@ export default function LaunchPlanner() {
               <div className="space-y-4">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-slate-400">Risk Score</span>
-                    <span className="text-2xl font-bold text-slate-100">{result.debrisRisk.score.toFixed(1)}/10</span>
+                    <span className="text-sm text-space-text-muted">Risk Score</span>
+                    <span className="text-2xl font-bold text-white">{result.debrisRisk.score.toFixed(1)}/10</span>
                   </div>
                   <div className="w-full bg-slate-800 rounded-full h-2">
                     <div 
@@ -321,24 +321,24 @@ export default function LaunchPlanner() {
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4 pt-3 border-t border-slate-700/50">
+                <div className="grid grid-cols-2 gap-4 pt-3 border-t border-space-border">
                   <div>
-                    <div className="text-xs text-slate-500 mb-1">Catalog Density</div>
-                    <div className="text-lg font-semibold text-slate-200">{result.debrisRisk.catalogDensityProxy}</div>
-                    <div className="text-xs text-slate-500">objects/km³</div>
+                    <div className="text-xs text-space-text-muted mb-1">Catalog Density</div>
+                    <div className="text-lg font-semibold text-white">{result.debrisRisk.catalogDensityProxy}</div>
+                    <div className="text-xs text-space-text-muted">objects/km³</div>
                   </div>
                   <div>
-                    <div className="text-xs text-slate-500 mb-1">Est. Conjunctions</div>
-                    <div className="text-lg font-semibold text-slate-200">{result.debrisRisk.estimatedConjunctionsPerYear.toFixed(2)}</div>
-                    <div className="text-xs text-slate-500">per year</div>
+                    <div className="text-xs text-space-text-muted mb-1">Est. Conjunctions</div>
+                    <div className="text-lg font-semibold text-white">{result.debrisRisk.estimatedConjunctionsPerYear.toFixed(2)}</div>
+                    <div className="text-xs text-space-text-muted">per year</div>
                   </div>
                 </div>
                 {result.debrisRisk.notes.length > 0 && (
-                  <div className="pt-3 border-t border-slate-700/50">
-                    <div className="text-sm text-slate-400 mb-2">Risk Notes</div>
+                  <div className="pt-3 border-t border-space-border">
+                    <div className="text-sm text-space-text-muted mb-2">Risk Notes</div>
                     <ul className="space-y-1.5">
                       {result.debrisRisk.notes.map((n, i) => (
-                        <li key={i} className="text-xs text-slate-300 flex items-start">
+                        <li key={i} className="text-xs text-space-text-main flex items-start">
                           <span className="text-cyan-400 mr-2">•</span>
                           <span>{n}</span>
                         </li>
@@ -350,9 +350,9 @@ export default function LaunchPlanner() {
             </div>
 
             {/* Lifetime Card */}
-            <div className="glass-panel rounded-xl border border-slate-800/60 p-6 bg-gradient-to-br from-slate-900/50 to-slate-800/30">
+            <div className="rounded-lg border border-space-border bg-space-section p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-slate-100">Orbital Lifetime</h3>
+                <h3 className="text-xl font-bold text-white">Orbital Lifetime</h3>
                 <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                   result.lifetimeYears.complies25yrRule 
                     ? 'bg-green-500/20 border border-green-500/40 text-green-400' 
@@ -363,45 +363,45 @@ export default function LaunchPlanner() {
               </div>
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="p-3 rounded-lg bg-slate-800/30 border border-slate-700/50">
-                    <div className="text-xs text-slate-500 mb-1">Median Lifetime</div>
+                  <div className="p-3 rounded-lg bg-space-card border border-space-border">
+                    <div className="text-xs text-space-text-muted mb-1">Median Lifetime</div>
                     <div className="text-xl font-bold text-cyan-400">{result.lifetimeYears.median.toFixed(1)}</div>
-                    <div className="text-xs text-slate-500">years</div>
+                    <div className="text-xs text-space-text-muted">years</div>
                   </div>
-                  <div className="p-3 rounded-lg bg-slate-800/30 border border-slate-700/50">
-                    <div className="text-xs text-slate-500 mb-1">Ballistic Coeff.</div>
+                  <div className="p-3 rounded-lg bg-space-card border border-space-border">
+                    <div className="text-xs text-space-text-muted mb-1">Ballistic Coeff.</div>
                     <div className="text-xl font-bold text-purple-400">{result.lifetimeYears.B.toFixed(2)}</div>
-                    <div className="text-xs text-slate-500">kg/m²</div>
+                    <div className="text-xs text-space-text-muted">kg/m²</div>
                   </div>
                 </div>
-                <div className="pt-3 border-t border-slate-700/50">
-                  <div className="text-sm text-slate-400 mb-3">Solar Activity Scenarios</div>
+                <div className="pt-3 border-t border-space-border">
+                  <div className="text-sm text-space-text-muted mb-3">Solar Activity Scenarios</div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <div className="text-xs text-slate-500 mb-1">Solar Minimum</div>
-                      <div className="text-lg font-semibold text-slate-200">{result.lifetimeYears.solarMin.toFixed(1)} years</div>
+                      <div className="text-xs text-space-text-muted mb-1">Solar Minimum</div>
+                      <div className="text-lg font-semibold text-white">{result.lifetimeYears.solarMin.toFixed(1)} years</div>
                     </div>
                     <div>
-                      <div className="text-xs text-slate-500 mb-1">Solar Maximum</div>
-                      <div className="text-lg font-semibold text-slate-200">{result.lifetimeYears.solarMax.toFixed(1)} years</div>
+                      <div className="text-xs text-space-text-muted mb-1">Solar Maximum</div>
+                      <div className="text-lg font-semibold text-white">{result.lifetimeYears.solarMax.toFixed(1)} years</div>
                     </div>
                   </div>
                 </div>
-                <div className="pt-3 border-t border-slate-700/50">
-                  <div className="text-sm text-slate-400 mb-2">Orbital Parameters</div>
+                <div className="pt-3 border-t border-space-border">
+                  <div className="text-sm text-space-text-muted mb-2">Orbital Parameters</div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <div className="text-xs text-slate-500 mb-1">Effective Altitude</div>
-                      <div className="text-sm font-semibold text-slate-200">{result.lifetimeYears.effectiveAltitude.toFixed(1)} km</div>
+                      <div className="text-xs text-space-text-muted mb-1">Effective Altitude</div>
+                      <div className="text-sm font-semibold text-white">{result.lifetimeYears.effectiveAltitude.toFixed(1)} km</div>
                     </div>
                     <div>
-                      <div className="text-xs text-slate-500 mb-1">Scale Height</div>
-                      <div className="text-sm font-semibold text-slate-200">{result.lifetimeYears.scaleHeight} km</div>
+                      <div className="text-xs text-space-text-muted mb-1">Scale Height</div>
+                      <div className="text-sm font-semibold text-white">{result.lifetimeYears.scaleHeight} km</div>
                     </div>
                   </div>
                 </div>
                 {result.lifetimeYears.eccentricityWarning && (
-                  <div className="pt-3 border-t border-slate-700/50">
+                  <div className="pt-3 border-t border-space-border">
                     <div className="p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30">
                       <div className="text-xs text-yellow-300 font-semibold mb-1">⚠️ Eccentricity Warning</div>
                       <div className="text-xs text-yellow-200">{result.lifetimeYears.eccentricityWarning}</div>
@@ -412,75 +412,75 @@ export default function LaunchPlanner() {
             </div>
 
             {/* Inputs & Technical Details Card */}
-            <div className="glass-panel rounded-xl border border-slate-800/60 p-6 bg-gradient-to-br from-slate-900/50 to-slate-800/30">
-              <h3 className="text-xl font-bold text-slate-100 mb-4">Technical Parameters</h3>
+            <div className="rounded-lg border border-space-border bg-space-section p-6">
+              <h3 className="text-xl font-bold text-white mb-4">Technical Parameters</h3>
               <div className="space-y-4">
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="p-3 rounded-lg bg-slate-800/30 border border-slate-700/50">
-                    <div className="text-xs text-slate-500 mb-1">Drag Coefficient</div>
-                    <div className="text-lg font-bold text-slate-200">{result.inputs.Cd}</div>
+                  <div className="p-3 rounded-lg bg-space-card border border-space-border">
+                    <div className="text-xs text-space-text-muted mb-1">Drag Coefficient</div>
+                    <div className="text-lg font-bold text-white">{result.inputs.Cd}</div>
                   </div>
-                  <div className="p-3 rounded-lg bg-slate-800/30 border border-slate-700/50">
-                    <div className="text-xs text-slate-500 mb-1">Solar Flux (F10.7)</div>
-                    <div className="text-lg font-bold text-slate-200">{result.inputs.solarFlux81}</div>
-                    <div className="text-xs text-slate-500">SFU</div>
+                  <div className="p-3 rounded-lg bg-space-card border border-space-border">
+                    <div className="text-xs text-space-text-muted mb-1">Solar Flux (F10.7)</div>
+                    <div className="text-lg font-bold text-white">{result.inputs.solarFlux81}</div>
+                    <div className="text-xs text-space-text-muted">SFU</div>
                   </div>
-                  <div className="p-3 rounded-lg bg-slate-800/30 border border-slate-700/50">
-                    <div className="text-xs text-slate-500 mb-1">Eccentricity</div>
-                    <div className="text-lg font-bold text-slate-200">{result.inputs.eccentricity.toFixed(4)}</div>
+                  <div className="p-3 rounded-lg bg-space-card border border-space-border">
+                    <div className="text-xs text-space-text-muted mb-1">Eccentricity</div>
+                    <div className="text-lg font-bold text-white">{result.inputs.eccentricity.toFixed(4)}</div>
                   </div>
                 </div>
                 {result.notes && (
-                  <div className="pt-3 border-t border-slate-700/50">
-                    <div className="text-xs text-slate-400 italic leading-relaxed">{result.notes}</div>
+                  <div className="pt-3 border-t border-space-border">
+                    <div className="text-xs text-space-text-muted italic leading-relaxed">{result.notes}</div>
                   </div>
                 )}
               </div>
             </div>
 
             {/* Recommendations Card */}
-            <div className="lg:col-span-2 glass-panel rounded-xl border border-slate-800/60 p-6 bg-gradient-to-br from-slate-900/50 to-slate-800/30">
-              <h3 className="text-xl font-bold text-slate-100 mb-4">Recommendations & Next Steps</h3>
+            <div className="lg:col-span-2 rounded-lg border border-space-border bg-space-section p-6">
+              <h3 className="text-xl font-bold text-white mb-4">Recommendations & Next Steps</h3>
               <div className="space-y-3">
                 {result.recommendations.map((r, i) => (
-                  <div key={i} className="flex items-start p-4 rounded-lg bg-slate-800/30 border border-slate-700/50 hover:border-cyan-500/30 transition-colors">
+                  <div key={i} className="flex items-start p-4 rounded-lg bg-space-card border border-space-border hover:border-cyan-500/30 transition-colors">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center mr-3 mt-0.5">
                       <span className="text-cyan-400 text-xs font-bold">{i + 1}</span>
                     </div>
-                    <p className="text-sm text-slate-300 leading-relaxed flex-1">{r}</p>
+                    <p className="text-sm text-space-text-main leading-relaxed flex-1">{r}</p>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Model Accuracy Card */}
-            <div className="lg:col-span-2 glass-panel rounded-xl border border-slate-800/60 p-6 bg-gradient-to-br from-slate-900/50 to-slate-800/30">
+            <div className="lg:col-span-2 rounded-lg border border-space-border bg-space-section p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-slate-100">Model Accuracy & Limitations</h3>
+                <h3 className="text-xl font-bold text-white">Model Accuracy & Limitations</h3>
                 <span className="px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-400 text-xs font-semibold capitalize">
                   {result.modelAccuracy.level}
                 </span>
               </div>
               <div className="space-y-4">
-                <p className="text-sm text-slate-300 leading-relaxed">{result.modelAccuracy.description}</p>
+                <p className="text-sm text-space-text-main leading-relaxed">{result.modelAccuracy.description}</p>
                 
                 <div>
-                  <div className="text-sm font-semibold text-slate-400 mb-2">Limitations</div>
+                  <div className="text-sm font-semibold text-space-text-muted mb-2">Limitations</div>
                   <ul className="space-y-2">
                     {result.modelAccuracy.limitations.map((limitation, i) => (
-                      <li key={i} className="flex items-start text-xs text-slate-300">
-                        <span className="text-slate-500 mr-2">•</span>
+                      <li key={i} className="flex items-start text-xs text-space-text-main">
+                        <span className="text-space-text-muted mr-2">•</span>
                         <span>{limitation}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="pt-3 border-t border-slate-700/50">
-                  <div className="text-sm font-semibold text-slate-400 mb-2">References</div>
+                <div className="pt-3 border-t border-space-border">
+                  <div className="text-sm font-semibold text-space-text-muted mb-2">References</div>
                   <ul className="space-y-1.5">
                     {result.modelAccuracy.citations.map((citation, i) => (
-                      <li key={i} className="text-xs text-slate-400 italic">
+                      <li key={i} className="text-xs text-space-text-muted italic">
                         {citation}
                       </li>
                     ))}
@@ -493,8 +493,8 @@ export default function LaunchPlanner() {
           <div className="mt-10">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
-                <h2 className="text-2xl font-semibold text-slate-100">Launch Corridor Visualizer</h2>
-                <p className="text-sm text-slate-400 mt-1">
+                <h2 className="text-2xl font-semibold text-white">Launch Corridor Visualizer</h2>
+                <p className="text-sm text-space-text-muted mt-1">
                   {viewingAlternative && !result.launchSiteAnalysis.feasible
                     ? `Viewing: ${result.launchSiteAnalysis.bestAlternative.name}`
                     : `Viewing: ${result.launchSiteAnalysis.userSite}`}
@@ -516,7 +516,7 @@ export default function LaunchPlanner() {
                   <button
                     type="button"
                     onClick={() => setVisualizerExpanded(true)}
-                    className="rounded-md border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm font-semibold text-slate-200 transition hover:bg-slate-900/80 hover:text-white"
+                    className="rounded-md border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-900/80 hover:text-white"
                   >
                     Expand Visualizer
                   </button>
@@ -525,7 +525,7 @@ export default function LaunchPlanner() {
             </div>
 
             {!visualizerExpanded && (
-              <div className="mt-4 overflow-hidden rounded-xl border border-slate-800/60 bg-slate-950/60">
+              <div className="mt-4 overflow-hidden rounded-xl border border-space-border bg-space-section">
                 <EarthView
                   key={`embedded-${viewingAlternative}`}
                   layout="embedded"
@@ -575,7 +575,7 @@ export default function LaunchPlanner() {
                   setVisualizerExpanded(false);
                   setViewingAlternative(false);
                 }}
-                className="rounded-md border border-slate-600 bg-slate-800/70 px-4 py-2 text-sm font-semibold text-slate-50 transition hover:bg-slate-800 hover:text-white"
+                className="rounded-md border border-slate-600 bg-slate-800/70 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 hover:text-white"
               >
                 Exit Fullscreen
               </button>

@@ -23,7 +23,7 @@ export default function KpForecastChart({ forecastData }: KpForecastChartProps) 
     }));
 
     return (
-        <div className="bg-gray-900/70 p-6 rounded-xl border border-gray-800 hover:border-cyan-500/30 transition-all duration-300">
+        <div className="bg-space-card/70 p-6 rounded-xl border border-space-border hover:border-cyan-500/30 transition-all duration-300">
             <div className="flex items-center gap-2 mb-4">
                 <Activity className="w-5 h-5 text-cyan-400" />
                 <h3 className="text-lg font-semibold">Kp Index Forecast (Next 24h)</h3>
@@ -71,7 +71,7 @@ export default function KpForecastChart({ forecastData }: KpForecastChartProps) 
                     />
                 </AreaChart>
             </ResponsiveContainer>
-            <div className="flex items-center gap-4 mt-4 text-xs text-gray-500">
+            <div className="flex items-center gap-4 mt-4 text-xs text-space-text-soft">
                 <div className="flex items-center gap-1">
                     <div className="w-3 h-3 bg-orange-500/50 rounded"></div>
                     <span>Moderate (5+)</span>

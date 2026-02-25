@@ -24,8 +24,8 @@ export default function CoronalMassEjectionCard({ coronalMassEjection }: Coronal
                 </h3>
                 {coronalMassEjection.latest.note && (
                     <div className="group relative">
-                        <Info className="w-4 h-4 text-gray-400 hover:text-purple-400 cursor-help transition-colors" />
-                        <div className="absolute right-0 top-6 w-80 p-3 bg-gray-800 border border-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-xs text-gray-300">
+                        <Info className="w-4 h-4 text-space-text-muted hover:text-purple-400 cursor-help transition-colors" />
+                        <div className="absolute right-0 top-6 w-80 p-3 bg-space-section border border-space-border rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-xs text-space-text-main">
                             <p className="font-semibold text-purple-400 mb-1">CME Note:</p>
                             <p className="leading-relaxed">{coronalMassEjection.latest.note}</p>
                         </div>
@@ -34,51 +34,51 @@ export default function CoronalMassEjectionCard({ coronalMassEjection }: Coronal
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <p className="text-xs text-gray-400 mb-1">Latest CME</p>
+                    <p className="text-xs text-space-text-muted mb-1">Latest CME</p>
                     <p className="text-2xl font-bold text-pink-400">{coronalMassEjection.latest.speed} km/s</p>
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-space-text-soft mt-1">
                         {new Date(coronalMassEjection.latest.startTime).toLocaleString()}
                     </p>
                     {coronalMassEjection.latest.type && (
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-space-text-soft mt-1">
                             Type: {coronalMassEjection.latest.type}
                         </p>
                     )}
                     {coronalMassEjection.latest.halfAngle && coronalMassEjection.latest.halfAngle > 0 && (
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-space-text-soft">
                             Half Angle: {coronalMassEjection.latest.halfAngle}°
                         </p>
                     )}
                     {coronalMassEjection.latest.latitude !== null && coronalMassEjection.latest.longitude !== null && (
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-space-text-soft">
                             Location: {coronalMassEjection.latest.latitude}°, {coronalMassEjection.latest.longitude}°
                         </p>
                     )}
                     {coronalMassEjection.latest.instruments && coronalMassEjection.latest.instruments.length > 0 && (
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-space-text-soft mt-1">
                             Instruments: {coronalMassEjection.latest.instruments.slice(0, 2).join(", ")}
                             {coronalMassEjection.latest.instruments.length > 2 && ` +${coronalMassEjection.latest.instruments.length - 2} more`}
                         </p>
                     )}
                 </div>
                 <div>
-                    <p className="text-xs text-gray-400 mb-1">Speed Range</p>
-                    <p className="text-sm text-gray-300">
+                    <p className="text-xs text-space-text-muted mb-1">Speed Range</p>
+                    <p className="text-sm text-space-text-main">
                         Min: {coronalMassEjection.speed.min} km/s
                     </p>
-                    <p className="text-sm text-gray-300">
+                    <p className="text-sm text-space-text-main">
                         Max: {coronalMassEjection.speed.max} km/s
                     </p>
-                    <p className="text-sm text-gray-300">
+                    <p className="text-sm text-space-text-main">
                         Avg: {coronalMassEjection.speed.avg} km/s
                     </p>
                 </div>
                 <div>
-                    <p className="text-xs text-gray-400 mb-1">Statistics</p>
-                    <p className="text-sm text-gray-300">
+                    <p className="text-xs text-space-text-muted mb-1">Statistics</p>
+                    <p className="text-sm text-space-text-main">
                         Total: {coronalMassEjection.totalCount}
                     </p>
-                    <p className="text-sm text-gray-300">
+                    <p className="text-sm text-space-text-main">
                         Earth-Directed: {coronalMassEjection.earthDirectedCount}
                     </p>
                     {coronalMassEjection.estimatedArrival && (

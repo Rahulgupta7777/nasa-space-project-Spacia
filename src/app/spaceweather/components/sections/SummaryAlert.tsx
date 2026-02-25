@@ -22,7 +22,7 @@ export default function SummaryAlert({ summary, dataQuality }: SummaryAlertProps
             <div className="flex justify-between items-start mb-3">
                 <div>
                     <h2 className="text-2xl font-bold">{summary.status}</h2>
-                    <p className="text-sm text-gray-300 mt-1">Risk Level: {summary.riskLevel}</p>
+                    <p className="text-sm text-space-text-main mt-1">Risk Level: {summary.riskLevel}</p>
                 </div>
                 <span className="text-xs bg-black/40 px-3 py-1 rounded-full">
                     Data Quality: {dataQuality.score}%
@@ -38,7 +38,7 @@ export default function SummaryAlert({ summary, dataQuality }: SummaryAlertProps
                     </h4>
                     <div className="space-y-2">
                         {summary.alerts.map((alert, i) => (
-                            <div key={i} className="flex items-start gap-2 text-sm text-gray-300">
+                            <div key={i} className="flex items-start gap-2 text-sm text-space-text-main">
                                 <span className="text-red-400 font-mono text-xs">[{alert.level}]</span>
                                 <div>
                                     <span className="font-medium">{alert.type}:</span> {alert.message}
@@ -51,7 +51,7 @@ export default function SummaryAlert({ summary, dataQuality }: SummaryAlertProps
 
             <div className="space-y-2">
                 <h4 className="font-semibold text-gray-200">Recommendations:</h4>
-                <ul className="list-disc list-inside text-sm text-gray-300 space-y-1">
+                <ul className="list-disc list-inside text-sm text-space-text-main space-y-1">
                     {summary.recommendations.map((r, i) => (
                         <li key={i}>{r}</li>
                     ))}

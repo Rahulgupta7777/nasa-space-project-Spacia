@@ -7,7 +7,7 @@ interface FooterProps {
 
 export default function Footer({ dataSources, metadata }: FooterProps) {
     return (
-        <div className="text-center text-gray-500 text-xs mt-8 py-4 border-t border-gray-800">
+        <div className="text-center text-space-text-soft text-xs mt-8 py-4 border-t border-space-border">
             <p>
                 Data Sources: {dataSources.join(", ")} • Next update at{" "}
                 {new Date(metadata.nextUpdate).toLocaleTimeString()}

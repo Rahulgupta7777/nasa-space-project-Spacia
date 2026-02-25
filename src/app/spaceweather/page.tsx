@@ -50,8 +50,8 @@ export default function SpaceWeatherPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-gray-100 p-6">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="mx-auto max-w-6xl px-4 py-12 text-space-text-main">
+      <div className="space-y-8">
         {/* Header */}
         <Header timestamp={data.timestamp} dataSources={data.dataSources} />
 
