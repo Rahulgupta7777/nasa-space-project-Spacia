@@ -15,7 +15,7 @@ export default function AuroraForecast({ aurora }: AuroraForecastProps) {
         <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-r from-green-900/40 to-cyan-900/40 border border-green-500/50 p-5 rounded-xl"
+            className="bg-space-card border border-space-border p-5 rounded-xl"
         >
             <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-green-400" />

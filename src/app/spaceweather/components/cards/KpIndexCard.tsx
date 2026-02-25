@@ -13,7 +13,7 @@ export default function KpIndexCard({ kpIndex }: KpIndexCardProps) {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.1 }}
-            className="bg-space-card/70 border border-space-border p-5 rounded-xl hover:border-cyan-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10"
+            className="bg-space-card border border-space-border p-5 rounded-xl"
         >
             <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -46,10 +46,10 @@ export default function KpIndexCard({ kpIndex }: KpIndexCardProps) {
             </div>
             <p
                 className={`text-3xl font-bold mb-3 ${kpIndex.current >= 7
-                        ? "text-red-400"
-                        : kpIndex.current >= 5
-                            ? "text-orange-400"
-                            : "text-green-400"
+                    ? "text-red-400"
+                    : kpIndex.current >= 5
+                        ? "text-orange-400"
+                        : "text-green-400"
                     }`}
             >
                 {kpIndex.current.toFixed(2)}

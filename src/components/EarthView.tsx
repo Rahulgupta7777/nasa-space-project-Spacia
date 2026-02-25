@@ -2,14 +2,14 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { 
-  ChevronDown, 
-  X, 
-  Satellite, 
-  AlertTriangle, 
-  Radio, 
-  Target, 
-  RotateCcw, 
+import {
+  ChevronDown,
+  X,
+  Satellite,
+  AlertTriangle,
+  Radio,
+  Target,
+  RotateCcw,
   Activity,
   Eye,
   EyeOff,
@@ -104,12 +104,12 @@ const EarthView: React.FC = () => {
   const [animationPaused, setAnimationPaused] = useState(false);
   const [smallDebrisIntensity, setSmallDebrisIntensity] = useState(0.7); // opacity 0..1
   const [isMounted, setIsMounted] = useState(false);
-  
+
   // Refs for animation state to avoid stale closures
   const animationPausedRef = useRef(false);
   const pulseRiskZonesRef = useRef(true);
   const smallDebrisIntensityRef = useRef(0.7);
-  
+
   // Only show official stats; visualization is density-scaled for performance
 
   // Ensure component only renders on client to avoid hydration mismatch
@@ -164,16 +164,16 @@ const EarthView: React.FC = () => {
     // Renderer setup with error handling
     let renderer: THREE.WebGLRenderer | null = null;
     try {
-      renderer = new THREE.WebGLRenderer({ 
+      renderer = new THREE.WebGLRenderer({
         antialias: true,
         powerPreference: 'high-performance',
         failIfMajorPerformanceCaveat: false
       });
-      
+
       if (!renderer || !renderer.domElement) {
         throw new Error('Failed to create WebGL canvas');
       }
-      
+
       renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       mountRef.current.appendChild(renderer.domElement);
@@ -322,12 +322,12 @@ const EarthView: React.FC = () => {
     // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
-      
+
       if (rendererRef.current) {
         if (rendererRef.current.domElement) {
           rendererRef.current.domElement.removeEventListener('click', handleCanvasClick);
           rendererRef.current.domElement.removeEventListener('mousemove', handleCanvasMouseMove);
-          
+
           if (mountRef.current && mountRef.current.contains(rendererRef.current.domElement)) {
             mountRef.current.removeChild(rendererRef.current.domElement);
           }
@@ -335,12 +335,12 @@ const EarthView: React.FC = () => {
         rendererRef.current.dispose();
         rendererRef.current = null;
       }
-      
+
       if (animationIdRef.current !== null) {
         cancelAnimationFrame(animationIdRef.current);
         animationIdRef.current = null;
       }
-      
+
       // Dispose OrbitControls
       if (controlsRef.current) {
         controlsRef.current.dispose();
@@ -385,13 +385,13 @@ const EarthView: React.FC = () => {
 
   const createEarth = (scene: THREE.Scene) => {
     const loader = new THREE.TextureLoader();
-    
+
     // Load Earth textures
     const earthTexture = loader.load("https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg");
     const earthBump = loader.load("https://threejs.org/examples/textures/planets/earth_bump_2048.jpg");
     const earthSpec = loader.load("https://threejs.org/examples/textures/planets/earth_specular_2048.jpg");
     const cloudsTexture = loader.load("https://threejs.org/examples/textures/planets/earth_clouds_1024.png");
-    
+
     const earthGeometry = new THREE.SphereGeometry(EARTH_RADIUS, 64, 64);
     const earthMaterial = new THREE.MeshPhongMaterial({
       map: earthTexture,
@@ -733,11 +733,11 @@ const EarthView: React.FC = () => {
 
     // Get all clickable objects
     const clickableObjects: THREE.Object3D[] = [];
-    
+
     objectsRef.current.forEach(obj => {
       clickableObjects.push(obj.mesh);
     });
-    
+
     riskZonesRef.current.forEach(zone => {
       clickableObjects.push(zone.mesh);
     });
@@ -755,7 +755,7 @@ const EarthView: React.FC = () => {
     if (intersects.length > 0) {
       const hoveredObject = intersects[0].object;
       const objectName = hoveredObject.name || hoveredObject.uuid;
-      
+
       if (objectName !== hoveredObjectRef.current && !selectedObjects.has(objectName)) {
         // Apply hover effect
         hoveredObject.traverse((child) => {
@@ -787,11 +787,11 @@ const EarthView: React.FC = () => {
     // Check in objects array
     const obj = objectsRef.current.find(o => o.mesh.name === name);
     if (obj) return obj.mesh;
-    
+
     // Check in risk zones
     const zone = riskZonesRef.current.find(z => z.mesh.name === name);
     if (zone) return zone.mesh;
-    
+
     return null;
   };
 
@@ -807,12 +807,12 @@ const EarthView: React.FC = () => {
 
     // Get all clickable objects
     const clickableObjects: THREE.Object3D[] = [];
-    
+
     // Add satellites and large debris
     objectsRef.current.forEach(obj => {
       clickableObjects.push(obj.mesh);
     });
-    
+
     // Add risk zones
     riskZonesRef.current.forEach(zone => {
       clickableObjects.push(zone.mesh);
@@ -823,16 +823,16 @@ const EarthView: React.FC = () => {
     if (intersects.length > 0) {
       const clickedObject = intersects[0].object;
       const objectName = clickedObject.name || clickedObject.uuid;
-      
+
       // Reset hover state since this object is now selected
       if (hoveredObjectRef.current === objectName) {
         hoveredObjectRef.current = null;
       }
-      
+
       // Toggle selection
       const newSelectedObjects = new Set(selectedObjects);
       const newHighlightedObjects = new Set(highlightedObjects);
-      
+
       if (selectedObjects.has(objectName)) {
         newSelectedObjects.delete(objectName);
         newHighlightedObjects.delete(objectName);
@@ -844,7 +844,7 @@ const EarthView: React.FC = () => {
         // Highlight object
         highlightObject(clickedObject);
       }
-      
+
       setSelectedObjects(newSelectedObjects);
       setHighlightedObjects(newHighlightedObjects);
       setSelectedObject(objectName);
@@ -862,7 +862,7 @@ const EarthView: React.FC = () => {
           // Store original values
           child.userData.originalEmissive = material.emissive.clone();
           child.userData.originalEmissiveIntensity = material.emissiveIntensity;
-          
+
           // Apply highlight
           material.emissive.setHex(0x444444);
           material.emissiveIntensity = 0.5;
@@ -896,13 +896,13 @@ const EarthView: React.FC = () => {
         resetObjectHighlight(obj.mesh);
       }
     });
-    
+
     riskZonesRef.current.forEach(zone => {
       if (highlightedObjects.has(zone.mesh.name || zone.mesh.uuid)) {
         resetObjectHighlight(zone.mesh);
       }
     });
-    
+
     setSelectedObjects(new Set());
     setHighlightedObjects(new Set());
     setSelectedObject(null);
@@ -946,7 +946,7 @@ const EarthView: React.FC = () => {
         ]
       };
     }
-    
+
     return { type: 'Unknown', name: objectName, details: ['No additional information'] };
   };
 
@@ -965,55 +965,50 @@ const EarthView: React.FC = () => {
       <div ref={mountRef} className="w-full h-full" />
 
       {/* UI Panel - Reduced Size */}
-      <div className={`absolute top-5 left-5 backdrop-blur-md bg-gradient-to-br from-[#0a0a0f]/90 via-[#0f1520]/90 to-[#0a0a0f]/90 rounded-lg border border-[#2a4a6a]/60 shadow-[0_8px_32px_0_rgba(74,158,255,0.15)] font-mono text-[12px] text-gray-200 animate-fade-in-slide transition-all duration-500 ease-in-out ${
-        panelExpanded ? 'p-4 min-w-[180px]' : 'p-2 min-w-[180px]'
-      }`}>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a3a5a]/20 to-transparent rounded-lg pointer-events-none" />
+      <div className={`absolute top-5 left-5 bg-space-section rounded-lg border border-space-border font-mono text-[12px] text-space-text-main animate-fade-in-slide transition-all duration-500 ease-in-out ${panelExpanded ? 'p-4 min-w-[180px]' : 'p-2 min-w-[180px]'
+        }`}>
         <div className="relative">
           {/* Header - Smaller */}
           <div className="flex items-center justify-between mb-2">
-            <h1 className={`text-transparent bg-clip-text bg-gradient-to-r from-[#4a9eff] via-[#6ab0ff] to-[#4a9eff] tracking-[1px] font-semibold transition-all duration-300 ${
-              panelExpanded ? 'text-[14px]' : 'text-[11px]'
-            }`}>
+            <h1 className={`text-space-text-heading tracking-[1px] font-semibold transition-all duration-300 ${panelExpanded ? 'text-[14px]' : 'text-[11px]'
+              }`}>
               LEO DEBRIS
             </h1>
             <button
               onClick={() => setPanelExpanded(!panelExpanded)}
-              className="ml-1 p-1 rounded-md bg-[#1a3a5a]/40 border border-[#2a4a6a]/60 hover:bg-[#2a4a6a]/60 hover:border-[#4a9eff]/60 transition-all duration-300 flex items-center justify-center"
+              className="ml-1 p-1 rounded-md bg-space-card border border-space-border hover:border-space-border-hover transition-all duration-300 flex items-center justify-center"
               aria-label={panelExpanded ? 'Collapse panel' : 'Expand panel'}
             >
               <ChevronDown
-                className={`w-3 h-3 text-[#6ab0ff] transition-transform duration-300 ${
-                  panelExpanded ? 'rotate-180' : ''
-                }`}
+                className={`w-3 h-3 text-space-text-muted transition-transform duration-300 ${panelExpanded ? 'rotate-180' : ''
+                  }`}
               />
             </button>
           </div>
 
-          <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
-            panelExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
-          }`}>
+          <div className={`overflow-hidden transition-all duration-500 ease-in-out ${panelExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
+            }`}>
             {panelExpanded && (
               <>
-                <div className="border-b border-[#2a4a6a]/50 pb-3 mb-4" />
+                <div className="border-b border-space-border pb-3 mb-4" />
 
-                <div className="text-[10px] text-[#6ab0ff] mt-3 mb-2 tracking-wider font-semibold uppercase flex items-center gap-1.5">
+                <div className="text-[10px] text-space-text-muted mt-3 mb-2 tracking-wider font-semibold uppercase flex items-center gap-1.5">
                   <BarChart3 className="w-3 h-3" />
                   OBJECT STATISTICS
                 </div>
                 <StatRow label="Total Objects (est.)" value={stats.total.toLocaleString()} icon={<Globe className="w-3 h-3 text-[#4a9eff]" />} />
                 <StatRow label="Active Satellites" satelliteZone value={NASA_STATS.satellites.toLocaleString()} icon={<Satellite className="w-3 h-3 text-[#4affb8]" />} />
                 <StatRow label="Debris ≥10 cm (tracked)" value={NASA_STATS.largeDebris.toLocaleString()} danger icon={<Trash2 className="w-3 h-3 text-[#ff6b6b]" />} />
-                <StatRow label="Debris 1–10 cm (est.)" value={NASA_STATS.mediumDebris.toLocaleString()} warning icon={<AlertTriangle className="w-3 h-3 text-[#ffd93d]" />}/>
+                <StatRow label="Debris 1–10 cm (est.)" value={NASA_STATS.mediumDebris.toLocaleString()} warning icon={<AlertTriangle className="w-3 h-3 text-[#ffd93d]" />} />
                 <StatRow
                   label="Debris >1 mm (est.)"
                   value={NASA_STATS.smallDebrisEstimate.toLocaleString()}
                   warning
                   icon={<AlertTriangle className="w-3 h-3 text-[#ffd93d]" />}
                 />
-                <StatRow  riskZone label="Risk Zones (visualized)" value={riskZonesRef.current.length.toString()} icon={<Zap className="w-3 h-3 text-[#ff4aff]" />} />
+                <StatRow riskZone label="Risk Zones (visualized)" value={riskZonesRef.current.length.toString()} icon={<Zap className="w-3 h-3 text-[#ff4aff]" />} />
 
-                <div className="text-[10px] text-[#6ab0ff] mt-4 mb-2 tracking-wider font-semibold uppercase flex items-center gap-1.5">
+                <div className="text-[10px] text-space-text-muted mt-4 mb-2 tracking-wider font-semibold uppercase flex items-center gap-1.5">
                   <Layers className="w-3 h-3" />
                   ORBITAL PARAMS
                 </div>
@@ -1021,7 +1016,7 @@ const EarthView: React.FC = () => {
                 <StatRow label="Avg Velocity" value="7.66 km/s" icon={<Activity className="w-3 h-3 text-[#4a9eff]" />} />
                 <StatRow label="Period (400km)" value="92.5 min" icon={<Radio className="w-3 h-3 text-[#4a9eff]" />} />
 
-                <div className="text-[10px] text-[#6ab0ff] mt-4 mb-2 tracking-wider font-semibold uppercase flex items-center gap-1.5">
+                <div className="text-[10px] text-space-text-muted mt-4 mb-2 tracking-wider font-semibold uppercase flex items-center gap-1.5">
                   <Eye className="w-3 h-3" />
                   VIEW CONTROLS
                 </div>
@@ -1067,8 +1062,8 @@ const EarthView: React.FC = () => {
                     </div>
                   </ControlButton>
                 </div>
-                <div className="text-[10px] text-[#6ab0ff] mt-4 mb-2 tracking-wider font-semibold uppercase flex items-center gap-1.5">
-                  <Zap className="w-3 h-3 text-[#ffd93d]" />
+                <div className="text-[10px] text-space-text-muted mt-4 mb-2 tracking-wider font-semibold uppercase flex items-center gap-1.5">
+                  <Zap className="w-3 h-3 text-space-text-muted" />
                   SMALL DEBRIS INTENSITY
                 </div>
                 <div className="flex items-center gap-2">
@@ -1079,9 +1074,9 @@ const EarthView: React.FC = () => {
                     step={0.05}
                     value={smallDebrisIntensity}
                     onChange={(e) => setSmallDebrisIntensity(parseFloat(e.target.value))}
-                    className="w-full accent-[#4a9eff]"
+                    className="w-full"
                   />
-                  <span className="text-[10px] text-gray-300 w-8 text-right">
+                  <span className="text-[10px] text-space-text-main w-8 text-right">
                     {(smallDebrisIntensity * 100).toFixed(0)}%
                   </span>
                 </div>
@@ -1089,14 +1084,13 @@ const EarthView: React.FC = () => {
             )}
           </div>
 
-          <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
-            !panelExpanded ? 'max-h-[80px] opacity-100' : 'max-h-0 opacity-0'
-          }`}>
+          <div className={`overflow-hidden transition-all duration-500 ease-in-out ${!panelExpanded ? 'max-h-[80px] opacity-100' : 'max-h-0 opacity-0'
+            }`}>
             {!panelExpanded && (
               <div className="space-y-1 pt-1">
                 <div className="flex justify-between items-center text-[10px]">
-                  <span className="text-gray-400">Total Objects (est.)</span>
-                  <span className="text-[#4affb8] font-bold font-mono">
+                  <span className="text-space-text-muted">Total Objects (est.)</span>
+                  <span className="text-space-text-main font-bold font-mono">
                     {stats.total.toLocaleString()}
                   </span>
                 </div>
@@ -1107,10 +1101,9 @@ const EarthView: React.FC = () => {
       </div>
 
       {/* Legend - Right Side */}
-      <div className="absolute top-1/2 right-5 transform -translate-y-1/2 backdrop-blur-md bg-gradient-to-br from-[#0a0a0f]/90 via-[#0f1520]/90 to-[#0a0a0f]/90 p-4 rounded-xl border border-[#2a4a6a]/60 shadow-[0_8px_32px_0_rgba(74,158,255,0.15)] font-mono text-[10px] animate-fade-in-slide-slow">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a3a5a]/20 to-transparent rounded-xl pointer-events-none" />
+      <div className="absolute top-1/2 right-5 transform -translate-y-1/2 bg-space-section p-4 rounded-xl border border-space-border font-mono text-[10px] animate-fade-in-slide-slow">
         <div className="relative">
-          <div className="text-[#6ab0ff] mb-2 tracking-wider font-semibold uppercase text-center flex items-center justify-center gap-1.5">
+          <div className="text-space-text-heading mb-2 tracking-wider font-semibold uppercase text-center flex items-center justify-center gap-1.5">
             <Layers className="w-3 h-3" />
             LEGEND
           </div>
@@ -1122,19 +1115,18 @@ const EarthView: React.FC = () => {
       </div>
 
       {/* Info Panel */}
-      <div className="absolute top-5 right-5 backdrop-blur-md bg-gradient-to-br from-[#0a0a0f]/90 via-[#0f1520]/90 to-[#0a0a0f]/90 p-6 rounded-xl border border-[#2a4a6a]/60 shadow-[0_8px_32px_0_rgba(74,158,255,0.15)] max-w-[320px] font-mono text-[11px] leading-relaxed animate-fade-in-slide-medium">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a3a5a]/20 to-transparent rounded-xl pointer-events-none" />
+      <div className="absolute top-5 right-5 bg-space-section p-6 rounded-xl border border-space-border max-w-[320px] font-mono text-[11px] leading-relaxed animate-fade-in-slide-medium">
         <div className="relative">
-          <div className="text-[#6ab0ff] mb-3 tracking-wider font-semibold uppercase flex items-center gap-1.5">
+          <div className="text-space-text-heading mb-3 tracking-wider font-semibold uppercase flex items-center gap-1.5">
             <Info className="w-3.5 h-3.5" />
             ORBITAL CONTEXT
           </div>
-          <p className="text-gray-300 mb-3 leading-relaxed">
+          <p className="text-space-text-main mb-3 leading-relaxed">
             This visualization represents Low Earth Orbit (160-2,000 km altitude) space debris
             distribution based on statistical models.
           </p>
-          <p className="text-gray-300 leading-relaxed">
-            <strong className="text-[#6ab0ff]">Key Facts:</strong>
+          <p className="text-space-text-main leading-relaxed">
+            <strong className="text-space-text-heading">Key Facts:</strong>
             <br />
             • ~28,000 debris objects ≥10 cm tracked
             <br />
@@ -1150,29 +1142,28 @@ const EarthView: React.FC = () => {
 
       {/* Selected Object Info Panel */}
       {selectedObject && (
-        <div className="absolute bottom-25 right-5 backdrop-blur-md bg-gradient-to-br from-[#0a0a0f]/90 via-[#0f1520]/90 to-[#0a0a0f]/90 p-4 rounded-xl border border-[#2a4a6a]/60 shadow-[0_8px_32px_0_rgba(74,158,255,0.15)] max-w-[280px] font-mono text-[11px] leading-relaxed animate-fade-in-slide">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1a3a5a]/20 to-transparent rounded-xl pointer-events-none" />
+        <div className="absolute bottom-25 right-5 bg-space-section p-4 rounded-xl border border-space-border max-w-[280px] font-mono text-[11px] leading-relaxed animate-fade-in-slide">
           <div className="relative">
             <div className="flex items-center justify-between mb-2">
-              <div className="text-[#6ab0ff] tracking-wider font-semibold uppercase">SELECTED OBJECT</div>
+              <div className="text-space-text-heading tracking-wider font-semibold uppercase">SELECTED OBJECT</div>
               <button
                 onClick={clearAllSelections}
-                className="ml-4 p-1 rounded-md bg-[#1a3a5a]/40 border border-[#2a4a6a]/60 hover:bg-[#2a4a6a]/60 hover:border-[#4a9eff]/60 transition-all duration-300 flex items-center justify-center"
+                className="ml-4 p-1 rounded-md bg-space-card border border-space-border hover:border-space-border-hover transition-all duration-300 flex items-center justify-center"
                 aria-label="Clear selection"
               >
-                <X className="w-3 h-3 text-[#6ab0ff]" />
+                <X className="w-3 h-3 text-space-text-muted" />
               </button>
             </div>
             {(() => {
               const info = getObjectInfo(selectedObject);
               return (
                 <div>
-                  <div className="text-gray-200 mb-2">
-                    <span className="text-gray-400">Type:</span> <span className="text-[#4affb8]">{info.type}</span>
+                  <div className="text-space-text-main mb-2">
+                    <span className="text-space-text-muted">Type:</span> <span className="text-space-text-heading">{info.type}</span>
                   </div>
-                  <div className="text-gray-300 text-[10px] space-y-1">
+                  <div className="text-space-text-main text-[10px] space-y-1">
                     {info.details.map((detail, index) => (
-                      <div key={index} className="text-gray-300">• {detail}</div>
+                      <div key={index}>• {detail}</div>
                     ))}
                   </div>
                 </div>
@@ -1197,24 +1188,23 @@ interface StatRowProps {
 }
 
 const StatRow: React.FC<StatRowProps> = ({ label, value, warning, danger, riskZone, satelliteZone, icon }) => (
-  <div className="flex justify-between items-center my-1.5 p-2 px-2.5 bg-gradient-to-r from-[#141923]/70 to-[#0f1520]/50 border-l-2 border-[#2a4a6a]/60 text-[11px] rounded-r-sm transition-all duration-300 hover:bg-gradient-to-r hover:from-[#1a2533]/80 hover:to-[#141923]/60 hover:border-[#3a5a8a]/80">
+  <div className="flex justify-between items-center my-1.5 p-2 px-2.5 bg-space-card border border-space-border text-[11px] rounded-md transition-all duration-300 hover:border-space-border-hover">
     <div className="flex items-center gap-1.5">
       {icon && <span>{icon}</span>}
-      <span className="text-gray-300">{label}</span>
+      <span className="text-space-text-muted">{label}</span>
     </div>
     <span
-  className={`font-bold font-mono transition-all duration-300 ${
-    danger
-      ? 'text-[#ff6b6b] drop-shadow-[0_0_8px_rgba(255,107,107,0.5)]'
-      : warning
-      ? 'text-[#ffd93d] drop-shadow-[0_0_8px_rgba(255,217,61,0.5)]'
-      : riskZone
-      ? 'text-[#ff4aff] drop-shadow-[0_0_8px_rgba(255,74,255,0.5)]'
-      : satelliteZone
-      ? 'text-[#4affb8] drop-shadow-[0_0_8px_rgba(74,255,184,0.5)]'
-      : 'text-[#4a9eff] drop-shadow-[0_0_8px_rgba(74,158,255,0.5)]'
-  }`}
->
+      className={`font-bold font-mono transition-all duration-300 ${danger
+          ? 'text-red-500'
+          : warning
+            ? 'text-yellow-400'
+            : riskZone
+              ? 'text-purple-400'
+              : satelliteZone
+                ? 'text-green-400'
+                : 'text-space-text-main'
+        }`}
+    >
 
 
       {value}
@@ -1230,7 +1220,7 @@ interface ControlButtonProps {
 const ControlButton: React.FC<ControlButtonProps> = ({ onClick, children }) => (
   <button
     onClick={onClick}
-    className="w-full py-2 px-3 bg-gradient-to-br from-[#1a3a5a]/80 to-[#2a4a7a]/80 border border-[#3a5a8a]/60 rounded-md text-gray-200 font-mono text-[10px] tracking-wider transition-all duration-500 hover:from-[#2a4a6a] hover:to-[#3a5a8a] hover:border-[#4a9eff]/80 hover:shadow-[0_0_20px_rgba(74,158,255,0.3)] hover:scale-[1.02] active:scale-[0.98] active:translate-y-px cursor-pointer backdrop-blur-sm"
+    className="w-full py-2 px-3 bg-space-card border border-space-border rounded-md text-space-text-main font-mono text-[10px] tracking-wider transition-all duration-300 hover:border-space-border-hover hover:scale-[1.02] active:scale-[0.98] active:translate-y-px cursor-pointer"
   >
     {children}
   </button>
@@ -1244,9 +1234,9 @@ interface LegendItemProps {
 }
 
 const LegendItem: React.FC<LegendItemProps> = ({ color, label, opacity = 1, icon }) => (
-  <div className="flex items-center my-1.5 text-gray-300 transition-all duration-300 hover:text-gray-100">
+  <div className="flex items-center my-1.5 text-space-text-muted transition-all duration-300 hover:text-space-text-main">
     <div
-      className="w-3 h-3 rounded-sm mr-2 border border-white/30 shadow-[0_0_8px_rgba(0,0,0,0.3)] transition-all duration-300 hover:scale-110"
+      className="w-3 h-3 rounded-sm mr-2 border border-space-border transition-all duration-300 hover:scale-110"
       style={{ backgroundColor: color, opacity }}
     />
     {icon && <span className="mr-1.5">{icon}</span>}

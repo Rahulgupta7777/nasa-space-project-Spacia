@@ -15,7 +15,7 @@ export default function CoronalMassEjectionCard({ coronalMassEjection }: Coronal
         <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-r from-purple-900/40 to-pink-900/40 border border-purple-500/50 p-5 rounded-xl"
+            className="bg-space-card border border-space-border p-5 rounded-xl"
         >
             <div className="flex items-center justify-between mb-3">
                 <h3 className="text-lg font-semibold flex items-center gap-2">

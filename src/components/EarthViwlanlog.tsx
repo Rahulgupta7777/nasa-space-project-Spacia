@@ -198,9 +198,9 @@ const EarthView: React.FC<EarthViewProps> = ({
 
   useEffect(() => {
     if (!mountRef.current) return;
-    
+
     const container = mountRef.current;
-    
+
     // Use requestAnimationFrame to ensure DOM is ready
     const initId = requestAnimationFrame(() => {
       if (!mountRef.current) return;
@@ -240,7 +240,7 @@ const EarthView: React.FC<EarthViewProps> = ({
         controls.maxDistance = 60;
         controls.maxPolarAngle = Math.PI;
         controlsRef.current = controls;
-        
+
         // Note: Auto-focus is handled after launch satellite is created
       });
 
@@ -272,7 +272,7 @@ const EarthView: React.FC<EarthViewProps> = ({
         setSelectedObjects(new Set(['launch-site-satellite']));
         setHighlightedObjects(new Set(['launch-site-satellite']));
         setSelectedObject('launch-site-satellite');
-        
+
         // Auto-focus on launch site after it's created and controls are ready
         const focusLaunchSite = () => {
           if (launchSatelliteGroupRef.current && cameraRef.current && controlsRef.current) {
@@ -284,7 +284,7 @@ const EarthView: React.FC<EarthViewProps> = ({
             controlsRef.current.update();
           }
         };
-        
+
         // Try to focus after controls are loaded
         if (controlsRef.current) {
           setTimeout(focusLaunchSite, 100);
@@ -296,7 +296,7 @@ const EarthView: React.FC<EarthViewProps> = ({
               setTimeout(focusLaunchSite, 100);
             }
           }, 50);
-          
+
           // Cleanup interval after 5 seconds
           setTimeout(() => clearInterval(checkControls), 5000);
         }
@@ -437,7 +437,7 @@ const EarthView: React.FC<EarthViewProps> = ({
     // Cleanup
     return () => {
       cancelAnimationFrame(initId);
-      window.removeEventListener('resize', () => {});
+      window.removeEventListener('resize', () => { });
       if (launchSatelliteGroupRef.current) {
         launchSatelliteGroupRef.current.parent?.remove(launchSatelliteGroupRef.current);
         launchSatelliteGroupRef.current = null;
@@ -497,13 +497,13 @@ const EarthView: React.FC<EarthViewProps> = ({
 
   const createEarth = (scene: THREE.Scene) => {
     const loader = new THREE.TextureLoader();
-    
+
     // Load Earth textures
     const earthTexture = loader.load("https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg");
     const earthBump = loader.load("https://threejs.org/examples/textures/planets/earth_bump_2048.jpg");
     const earthSpec = loader.load("https://threejs.org/examples/textures/planets/earth_specular_2048.jpg");
     const cloudsTexture = loader.load("https://threejs.org/examples/textures/planets/earth_clouds_1024.png");
-    
+
     const earthGeometry = new THREE.SphereGeometry(EARTH_RADIUS, 64, 64);
     const earthMaterial = new THREE.MeshPhongMaterial({
       map: earthTexture,
@@ -572,7 +572,7 @@ const EarthView: React.FC<EarthViewProps> = ({
   };
 
 
-const createLaunchSiteSatellite = (
+  const createLaunchSiteSatellite = (
     scene: THREE.Scene,
     {
       latitude,
@@ -585,15 +585,15 @@ const createLaunchSiteSatellite = (
     if (!Number.isFinite(position.x) || !Number.isFinite(position.y) || !Number.isFinite(position.z)) {
       return null;
     }
-  
+
     const group = new THREE.Group();
     group.name = 'launch-site-group';
     group.position.copy(position);
-  
+
     const radialDirection = position.clone().normalize();
     const towardsEarth = radialDirection.clone().negate();
     const altitudeDistance = Math.max(position.length() - EARTH_RADIUS, 0.25);
-  
+
     // ✅ Sleek luminous core
     const coreGeometry = new THREE.OctahedronGeometry(0.18, 1);
     const coreMaterial = new THREE.MeshPhysicalMaterial({
@@ -608,7 +608,7 @@ const createLaunchSiteSatellite = (
     const core = new THREE.Mesh(coreGeometry, coreMaterial);
     core.name = 'launch-site-satellite';
     group.add(core);
-  
+
     // ✅ Subtle glow aura
     const glowGeometry = new THREE.SphereGeometry(0.28, 48, 48);
     const glowMaterial = new THREE.MeshBasicMaterial({
@@ -620,7 +620,7 @@ const createLaunchSiteSatellite = (
     });
     const glow = new THREE.Mesh(glowGeometry, glowMaterial);
     core.add(glow);
-  
+
     // ✅ Thin rotating energy ring (blue-white)
     const ringGeometry = new THREE.RingGeometry(0.25, 0.32, 64);
     const ringMaterial = new THREE.MeshBasicMaterial({
@@ -634,7 +634,7 @@ const createLaunchSiteSatellite = (
     ring.rotation.x = Math.PI / 2;
     ring.name = 'launch-site-ring';
     core.add(ring);
-  
+
     // ✅ Energy beam down to Earth
     const beamLength = altitudeDistance + 0.9;
     const beamGeometry = new THREE.CylinderGeometry(0.04, 0.12, Math.max(beamLength, 0.4), 32, 1, true);
@@ -651,7 +651,7 @@ const createLaunchSiteSatellite = (
     beam.quaternion.copy(beamQuaternion);
     beam.position.copy(towardsEarth.clone().multiplyScalar(beamLength / 2));
     group.add(beam);
-  
+
     // ✅ Minimal landing flare at surface
     const surfaceOffset = Math.max(position.length() - (EARTH_RADIUS + 0.05), 0.05);
     const baseGeometry = new THREE.CircleGeometry(0.4, 48);
@@ -667,12 +667,12 @@ const createLaunchSiteSatellite = (
     const baseQuaternion = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), radialDirection);
     baseFlare.quaternion.copy(baseQuaternion);
     group.add(baseFlare);
-  
+
     // ✅ Label sprite
     const labelSprite = createLaunchLabelSprite(name);
     labelSprite.position.set(0.5, 0.45, 0);
     core.add(labelSprite);
-  
+
     // ✅ Small sparkle effect
     const sparkGeometry = new THREE.RingGeometry(0.15, 0.19, 4);
     const sparkMaterial = new THREE.MeshBasicMaterial({
@@ -684,10 +684,10 @@ const createLaunchSiteSatellite = (
     const sparkHalo = new THREE.Mesh(sparkGeometry, sparkMaterial);
     sparkHalo.rotation.x = Math.PI / 2;
     core.add(sparkHalo);
-  
+
     const parent = scene.getObjectByName('earth') || scene;
     parent.add(group);
-  
+
     const spaceObject: SpaceObject = {
       mesh: core,
       type: 'satellite',
@@ -704,7 +704,7 @@ const createLaunchSiteSatellite = (
       accentMeshes: [sparkHalo],
       launchMeta: { name, latitude, longitude, altitudeKm },
     };
-  
+
     return { spaceObject, group };
   };
 
@@ -995,11 +995,11 @@ const createLaunchSiteSatellite = (
 
     // Get all clickable objects
     const clickableObjects: THREE.Object3D[] = [];
-    
+
     objectsRef.current.forEach(obj => {
       clickableObjects.push(obj.mesh);
     });
-    
+
     riskZonesRef.current.forEach(zone => {
       clickableObjects.push(zone.mesh);
     });
@@ -1017,7 +1017,7 @@ const createLaunchSiteSatellite = (
     if (intersects.length > 0) {
       const hoveredObject = intersects[0].object;
       const objectName = hoveredObject.name || hoveredObject.uuid;
-      
+
       if (objectName !== hoveredObjectRef.current && !selectedObjects.has(objectName)) {
         // Apply hover effect
         hoveredObject.traverse((child) => {
@@ -1049,11 +1049,11 @@ const createLaunchSiteSatellite = (
     // Check in objects array
     const obj = objectsRef.current.find(o => o.mesh.name === name);
     if (obj) return obj.mesh;
-    
+
     // Check in risk zones
     const zone = riskZonesRef.current.find(z => z.mesh.name === name);
     if (zone) return zone.mesh;
-    
+
     return null;
   };
 
@@ -1069,12 +1069,12 @@ const createLaunchSiteSatellite = (
 
     // Get all clickable objects
     const clickableObjects: THREE.Object3D[] = [];
-    
+
     // Add satellites and large debris
     objectsRef.current.forEach(obj => {
       clickableObjects.push(obj.mesh);
     });
-    
+
     // Add risk zones
     riskZonesRef.current.forEach(zone => {
       clickableObjects.push(zone.mesh);
@@ -1085,16 +1085,16 @@ const createLaunchSiteSatellite = (
     if (intersects.length > 0) {
       const clickedObject = intersects[0].object;
       const objectName = clickedObject.name || clickedObject.uuid;
-      
+
       // Reset hover state since this object is now selected
       if (hoveredObjectRef.current === objectName) {
         hoveredObjectRef.current = null;
       }
-      
+
       // Toggle selection
       const newSelectedObjects = new Set(selectedObjects);
       const newHighlightedObjects = new Set(highlightedObjects);
-      
+
       if (selectedObjects.has(objectName)) {
         newSelectedObjects.delete(objectName);
         newHighlightedObjects.delete(objectName);
@@ -1106,7 +1106,7 @@ const createLaunchSiteSatellite = (
         // Highlight object
         highlightObject(clickedObject);
       }
-      
+
       setSelectedObjects(newSelectedObjects);
       setHighlightedObjects(newHighlightedObjects);
       setSelectedObject(objectName);
@@ -1124,7 +1124,7 @@ const createLaunchSiteSatellite = (
           // Store original values
           child.userData.originalEmissive = material.emissive.clone();
           child.userData.originalEmissiveIntensity = material.emissiveIntensity;
-          
+
           // Apply highlight
           material.emissive.setHex(0x444444);
           material.emissiveIntensity = 0.5;
@@ -1158,13 +1158,13 @@ const createLaunchSiteSatellite = (
         resetObjectHighlight(obj.mesh);
       }
     });
-    
+
     riskZonesRef.current.forEach(zone => {
       if (highlightedObjects.has(zone.mesh.name || zone.mesh.uuid)) {
         resetObjectHighlight(zone.mesh);
       }
     });
-    
+
     setSelectedObjects(new Set());
     setHighlightedObjects(new Set());
     setSelectedObject(null);
@@ -1224,7 +1224,7 @@ const createLaunchSiteSatellite = (
         ]
       };
     }
-    
+
     return { type: 'Unknown', name: objectName, details: ['No additional information'] };
   };
 
@@ -1239,31 +1239,27 @@ const createLaunchSiteSatellite = (
       <div ref={mountRef} className="w-full h-full min-h-[400px]" />
 
       {/* Launch Control Panel */}
-      <div className={`absolute top-5 left-5 backdrop-blur-xl bg-gradient-to-br from-[#090d1c]/90 via-[#150b2b]/90 to-[#240f2f]/90 rounded-2xl border border-[#ff6f3c]/45 shadow-[0_18px_48px_rgba(255,122,64,0.25)] font-mono text-[12px] text-[#eef7ff] animate-fade-in-slide transition-all duration-500 ease-in-out ${
-        panelExpanded ? 'p-5 min-w-[230px]' : 'p-3 min-w-[210px]'
-      }`}>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#ff6f3c]/15 via-transparent to-[#45d6ff]/15 rounded-2xl pointer-events-none" />
+      <div className={`absolute top-5 left-5 bg-space-section rounded-2xl border border-space-border font-mono text-[12px] text-space-text-main animate-fade-in-slide transition-all duration-500 ease-in-out ${panelExpanded ? 'p-5 min-w-[230px]' : 'p-3 min-w-[210px]'
+        }`}>
         <div className="relative">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <div className="text-[10px] uppercase tracking-[0.38em] text-[#ffb347]/80">Launch Control</div>
+              <div className="text-[10px] uppercase tracking-[0.38em] text-space-text-muted">Launch Control</div>
               <div
-                className={`text-transparent bg-clip-text bg-gradient-to-r from-[#ffb347] via-[#ffe29f] to-[#66f1ff] font-semibold transition-all duration-300 whitespace-nowrap ${
-                  panelExpanded ? 'text-[16px]' : 'text-[13px]'
-                }`}
+                className={`text-space-text-heading font-semibold transition-all duration-300 whitespace-nowrap ${panelExpanded ? 'text-[16px]' : 'text-[13px]'
+                  }`}
               >
                 {safeLaunchName.toUpperCase()}
               </div>
             </div>
             <button
               onClick={() => setPanelExpanded(!panelExpanded)}
-              className="ml-2 p-1 rounded-md bg-[#ff6f3c]/20 border border-[#ff9d63]/40 hover:bg-[#ff6f3c]/30 hover:border-[#ffd29f]/60 transition-all duration-300 flex items-center justify-center"
+              className="ml-2 p-1 rounded-md bg-space-card border border-space-border hover:border-space-border-hover transition-all duration-300 flex items-center justify-center"
               aria-label={panelExpanded ? 'Collapse panel' : 'Expand panel'}
             >
               <svg
-                className={`w-3 h-3 text-[#ffe5ba] transition-transform duration-300 ${
-                  panelExpanded ? 'rotate-180' : ''
-                }`}
+                className={`w-3 h-3 text-space-text-muted transition-transform duration-300 ${panelExpanded ? 'rotate-180' : ''
+                  }`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -1273,14 +1269,13 @@ const createLaunchSiteSatellite = (
             </button>
           </div>
 
-          <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
-            panelExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
-          }`}>
+          <div className={`overflow-hidden transition-all duration-500 ease-in-out ${panelExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
+            }`}>
             {panelExpanded && (
               <>
-                <div className="border-b border-[#ff9d63]/30 pb-3 mb-4" />
+                <div className="border-b border-space-border pb-3 mb-4" />
 
-                <div className="text-[10px] text-[#ffdca8] mt-2 mb-2 tracking-wider font-semibold uppercase">
+                <div className="text-[10px] text-space-text-muted mt-2 mb-2 tracking-wider font-semibold uppercase">
                   Launch Target
                 </div>
                 <LaunchDetailRow label="Site" value={safeLaunchName} accent />
@@ -1298,7 +1293,7 @@ const createLaunchSiteSatellite = (
                 <StatRow label="Critical Debris >1 mm" value={NASA_STATS.smallDebrisEstimate.toLocaleString()} danger />
                 <StatRow label="Risk Zones (visualized)" value={riskZonesRef.current.length.toString()} /> */}
 
-                <div className="text-[10px] text-[#ffdca8] mt-4 mb-2 tracking-wider font-semibold uppercase">
+                <div className="text-[10px] text-space-text-muted mt-4 mb-2 tracking-wider font-semibold uppercase">
                   Mission Controls
                 </div>
                 <div className="grid grid-cols-2 gap-2">
@@ -1319,7 +1314,7 @@ const createLaunchSiteSatellite = (
                   <ControlButton onClick={resetView}>RESET VIEW</ControlButton>
                 </div>
 
-                <div className="text-[10px] text-[#ffdca8] mt-4 mb-2 tracking-wider font-semibold uppercase">
+                <div className="text-[10px] text-space-text-muted mt-4 mb-2 tracking-wider font-semibold uppercase">
                   Small Debris Intensity
                 </div>
                 <div className="flex items-center gap-2">
@@ -1330,9 +1325,9 @@ const createLaunchSiteSatellite = (
                     step={0.05}
                     value={smallDebrisIntensity}
                     onChange={(e) => setSmallDebrisIntensity(parseFloat(e.target.value))}
-                    className="w-full accent-[#ff914d]"
+                    className="w-full"
                   />
-                  <span className="text-[10px] text-[#ffe8c8] w-8 text-right">
+                  <span className="text-[10px] text-space-text-main w-8 text-right">
                     {(smallDebrisIntensity * 100).toFixed(0)}%
                   </span>
                 </div>
@@ -1340,24 +1335,23 @@ const createLaunchSiteSatellite = (
             )}
           </div>
 
-          <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
-            !panelExpanded ? 'max-h-[80px] opacity-100' : 'max-h-0 opacity-0'
-          }`}>
+          <div className={`overflow-hidden transition-all duration-500 ease-in-out ${!panelExpanded ? 'max-h-[80px] opacity-100' : 'max-h-0 opacity-0'
+            }`}>
             {!panelExpanded && (
               <div className="space-y-1 pt-1 text-[10px]">
                 <div className="flex justify-between items-center">
-                  <span className="text-[#ffe5ba]/80">Launch Site</span>
-                  <span className="text-[#ffe8c8] font-bold tracking-wider">{safeLaunchName}</span>
+                  <span className="text-space-text-muted">Launch Site</span>
+                  <span className="text-space-text-main font-bold tracking-wider">{safeLaunchName}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-[#ffe5ba]/60">Lat / Lon</span>
-                  <span className="text-[#ffbfa1] font-bold">
+                  <span className="text-space-text-muted">Lat / Lon</span>
+                  <span className="text-space-text-main font-bold">
                     {safeLaunchLatitude.toFixed(2)}° / {safeLaunchLongitude.toFixed(2)}°
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-[#ffe5ba]/60">Target Altitude</span>
-                  <span className="text-[#66f1ff] font-bold">{safeLaunchAltitudeKm.toLocaleString()} km</span>
+                  <span className="text-space-text-muted">Target Altitude</span>
+                  <span className="text-space-text-main font-bold">{safeLaunchAltitudeKm.toLocaleString()} km</span>
                 </div>
               </div>
             )}
@@ -1366,10 +1360,9 @@ const createLaunchSiteSatellite = (
       </div>
 
       {/* Legend - Right Side */}
-      <div className="absolute top-1/2 right-5 transform -translate-y-1/2 backdrop-blur-md bg-gradient-to-br from-[#0b0d1c]/90 via-[#150b2b]/90 to-[#240f2f]/90 p-1.5 mt-4 rounded-lg border border-[#ff6f3c]/35 shadow-[0_12px_36px_rgba(255,122,64,0.2)] font-mono text-[9px] animate-fade-in-slide-slow">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#ff6f3c]/12 via-transparent to-[#45d6ff]/12 rounded-lg pointer-events-none" />
+      <div className="absolute top-1/2 right-5 transform -translate-y-1/2 bg-space-section p-1.5 mt-4 rounded-lg border border-space-border font-mono text-[9px] animate-fade-in-slide-slow">
         <div className="relative">
-          <div className="text-[#8fe7ff] mb-1.5 tracking-wider font-semibold uppercase text-center text-[9px]">Legend</div>
+          <div className="text-space-text-heading mb-1.5 tracking-wider font-semibold uppercase text-center text-[9px]">Legend</div>
           <LegendItem color="#4affb8" label="Satellites" />
           <LegendItem color="#7fffff" label="Launch Target" />
           <LegendItem color="#ff6b6b" label="Large Debris" />
@@ -1380,22 +1373,21 @@ const createLaunchSiteSatellite = (
       </div>
 
       {/* Launch Briefing Panel */}
-      <div className="absolute top-3 right-5 mb-5 backdrop-blur-xl bg-gradient-to-br from-[#0a0d1f]/90 via-[#18113a]/90 to-[#240f2f]/90 p-2 rounded-xl border border-[#66f1ff]/30 shadow-[0_14px_40px_rgba(70,210,255,0.25)] max-w-[200px] font-mono text-[10px] leading-relaxed animate-fade-in-slide-medium">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#45d6ff]/12 via-transparent to-[#ff6f3c]/12 rounded-xl pointer-events-none" />
+      <div className="absolute top-3 right-5 mb-5 bg-space-section p-2 rounded-xl border border-space-border max-w-[200px] font-mono text-[10px] leading-relaxed animate-fade-in-slide-medium">
         <div className="relative space-y-2">
           <div className="flex items-center justify-between">
-            <div className="text-[#8fe7ff] tracking-wider font-semibold uppercase text-[10px]">Launch Briefing</div>
-            <span className="px-1.5 py-0.5 rounded-md bg-[#ff6f3c]/20 border border-[#ff9d63]/40 text-[#ffdca8] text-[9px] uppercase tracking-wide">
+            <div className="text-space-text-heading tracking-wider font-semibold uppercase text-[10px]">Launch Briefing</div>
+            <span className="px-1.5 py-0.5 rounded-md bg-space-card border border-space-border text-space-text-muted text-[9px] uppercase tracking-wide">
               L-0
             </span>
           </div>
-          <p className="text-[#cde8ff] leading-relaxed text-[9.5px]">
-            Monitoring launch corridor at <span className="text-[#ffe29f]">{safeLaunchAltitudeKm.toLocaleString()} km</span>.
+          <p className="text-space-text-main leading-relaxed text-[9.5px]">
+            Monitoring launch corridor at <span className="text-space-text-heading">{safeLaunchAltitudeKm.toLocaleString()} km</span>.
             Guidance systems synced with live debris telemetry to maintain a clear ascent window.
           </p>
-          <div className="space-y-0.5 text-[#a8c7ff] text-[9px] uppercase tracking-[0.2em]">
+          <div className="space-y-0.5 text-space-text-muted text-[9px] uppercase tracking-[0.2em]">
             <div>Checkpoints</div>
-            <ul className="space-y-0.5 text-[9.5px] text-[#f3f8ff] normal-case tracking-normal">
+            <ul className="space-y-0.5 text-[9.5px] text-space-text-main normal-case tracking-normal">
               <li>• Trajectory collision sweep every 30s</li>
               <li>• Dynamic reroute ready for orbital plane shifts</li>
               <li>• Launch beacon broadcasting to regional traffic</li>
@@ -1406,11 +1398,10 @@ const createLaunchSiteSatellite = (
 
       {/* Selected Object Info Panel */}
       {selectedObject && (
-        <div className="absolute mt-20 bottom-24 right-5 backdrop-blur-xl bg-gradient-to-br from-[#090d1c]/90 via-[#180f2d]/90 to-[#250f2f]/90 p-3 rounded-xl border border-[#ff6f3c]/35 shadow-[0_14px_36px_rgba(255,122,64,0.22)] max-w-[240px] font-mono text-[10px] leading-relaxed animate-fade-in-slide">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#ff6f3c]/12 via-transparent to-[#45d6ff]/12 rounded-xl pointer-events-none" />
+        <div className="absolute mt-20 bottom-24 right-5 bg-space-section p-3 rounded-xl border border-space-border max-w-[240px] font-mono text-[10px] leading-relaxed animate-fade-in-slide">
           <div className="relative">
             <div className="flex items-center justify-between mb-1.5">
-              <div className="text-[#ffcf96] tracking-wider font-semibold uppercase text-[10px]">Selected Object</div>
+              <div className="text-space-text-heading tracking-wider font-semibold uppercase text-[10px]">Selected Object</div>
               <button
                 onClick={clearAllSelections}
                 className="ml-3 p-0.5 rounded-md bg-[#ff6f3c]/20 border border-[#ff9d63]/40 hover:bg-[#ff6f3c]/30 hover:border-[#ffd29f]/60 transition-all duration-300 flex items-center justify-center"
@@ -1452,16 +1443,15 @@ interface StatRowProps {
 }
 
 const StatRow: React.FC<StatRowProps> = ({ label, value, warning, danger }) => (
-  <div className="flex justify-between my-1.5 p-2.5 bg-gradient-to-r from-[#120f24]/70 to-[#1d1636]/70 border border-[#ff6f3c]/12 text-[11px] rounded-md transition-all duration-300 hover:border-[#ff9d63]/35">
-    <span className="text-[#dbe8ff]">{label}</span>
+  <div className="flex justify-between my-1.5 p-2.5 bg-space-card border border-space-border text-[11px] rounded-md transition-all duration-300 hover:border-space-border-hover">
+    <span className="text-space-text-muted">{label}</span>
     <span
-      className={`font-bold font-mono tracking-wide transition-all duration-300 ${
-        danger
-          ? 'text-[#ff7b6b] drop-shadow-[0_0_12px_rgba(255,123,107,0.6)]'
-          : warning
-            ? 'text-[#ffd93d] drop-shadow-[0_0_12px_rgba(255,217,61,0.6)]'
-            : 'text-[#66f1ff] drop-shadow-[0_0_12px_rgba(102,241,255,0.6)]'
-      }`}
+      className={`font-bold font-mono tracking-wide transition-all duration-300 ${danger
+        ? 'text-red-500'
+        : warning
+          ? 'text-yellow-400'
+          : 'text-space-text-main'
+        }`}
     >
       {value}
     </span>
@@ -1476,7 +1466,7 @@ interface ControlButtonProps {
 const ControlButton: React.FC<ControlButtonProps> = ({ onClick, children }) => (
   <button
     onClick={onClick}
-    className="w-full py-2 px-3 bg-gradient-to-br from-[#ff6f3c]/25 to-[#66f1ff]/20 border border-[#ff9d63]/40 rounded-md text-[#ffe8c8] font-mono text-[10px] tracking-wider transition-all duration-500 hover:from-[#ff6f3c]/35 hover:to-[#66f1ff]/30 hover:border-[#ffd29f]/60 hover:shadow-[0_0_24px_rgba(255,122,64,0.35)] hover:scale-[1.03] active:scale-[0.97] active:translate-y-px cursor-pointer backdrop-blur-sm"
+    className="w-full py-2 px-3 bg-space-card border border-space-border hover:border-space-border-hover rounded-md text-space-text-main font-mono text-[10px] tracking-wider transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] active:translate-y-px cursor-pointer"
   >
     {children}
   </button>
@@ -1489,9 +1479,9 @@ interface LegendItemProps {
 }
 
 const LegendItem: React.FC<LegendItemProps> = ({ color, label, opacity = 1 }) => (
-  <div className="flex items-center my-1 text-[#e4eeff] transition-all duration-300 hover:text-white">
+  <div className="flex items-center my-1 text-space-text-muted transition-all duration-300 hover:text-space-text-main">
     <div
-      className="w-2.5 h-2.5 rounded-sm mr-1.5 border border-white/30 shadow-[0_0_8px_rgba(0,0,0,0.3)] transition-all duration-300 hover:scale-110"
+      className="w-2.5 h-2.5 rounded-sm mr-1.5 border border-space-border transition-all duration-300 hover:scale-110"
       style={{ backgroundColor: color, opacity }}
     />
     <span className="text-[9px]">{label}</span>
@@ -1506,11 +1496,10 @@ interface LaunchDetailRowProps {
 
 const LaunchDetailRow: React.FC<LaunchDetailRowProps> = ({ label, value, accent }) => (
   <div className="flex justify-between items-center py-1.5 text-[11px]">
-    <span className="text-[#dbe8ff]/80">{label}</span>
+    <span className="text-space-text-muted">{label}</span>
     <span
-      className={`font-mono tracking-wide ${
-        accent ? 'text-[#ffe29f] drop-shadow-[0_0_10px_rgba(255,226,159,0.4)]' : 'text-[#8fe7ff]'
-      }`}
+      className={`font-mono tracking-wide ${accent ? 'text-space-text-heading' : 'text-space-text-main'
+        }`}
     >
       {value}
     </span>

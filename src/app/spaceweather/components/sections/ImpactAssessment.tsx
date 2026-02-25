@@ -18,7 +18,7 @@ export default function ImpactAssessment({ impacts, weatherIndices }: ImpactAsse
             <h3 className="text-lg font-semibold mb-4">Impact Assessment</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {/* Satellites */}
-                <div className="p-4 bg-space-section/50 rounded-lg border border-space-border hover:border-gray-600 transition-colors">
+                <div className="p-4 bg-space-section rounded-lg border border-space-border hover:border-space-border-hover transition-colors">
                     <h4 className="font-semibold text-gray-200 mb-2 flex items-center gap-2">
                         <Satellite className="w-4 h-4 text-blue-400" />
                         Satellites
@@ -48,7 +48,7 @@ export default function ImpactAssessment({ impacts, weatherIndices }: ImpactAsse
                 </div>
 
                 {/* Aviation */}
-                <div className="p-4 bg-space-section/50 rounded-lg border border-space-border hover:border-gray-600 transition-colors">
+                <div className="p-4 bg-space-section rounded-lg border border-space-border hover:border-space-border-hover transition-colors">
                     <h4 className="font-semibold text-gray-200 mb-2 flex items-center gap-2">
                         <Plane className="w-4 h-4 text-sky-400" />
                         Aviation
@@ -72,7 +72,7 @@ export default function ImpactAssessment({ impacts, weatherIndices }: ImpactAsse
                 </div>
 
                 {/* Power Grids */}
-                <div className="p-4 bg-space-section/50 rounded-lg border border-space-border hover:border-gray-600 transition-colors">
+                <div className="p-4 bg-space-section rounded-lg border border-space-border hover:border-space-border-hover transition-colors">
                     <h4 className="font-semibold text-gray-200 mb-2 flex items-center gap-2">
                         <Power className="w-4 h-4 text-yellow-400" />
                         Power Grids
@@ -94,7 +94,7 @@ export default function ImpactAssessment({ impacts, weatherIndices }: ImpactAsse
                 </div>
 
                 {/* Communications */}
-                <div className="p-4 bg-space-section/50 rounded-lg border border-space-border hover:border-gray-600 transition-colors">
+                <div className="p-4 bg-space-section rounded-lg border border-space-border hover:border-space-border-hover transition-colors">
                     <h4 className="font-semibold text-gray-200 mb-2 flex items-center gap-2">
                         <RadioIcon className="w-4 h-4 text-green-400" />
                         Communications
@@ -118,7 +118,7 @@ export default function ImpactAssessment({ impacts, weatherIndices }: ImpactAsse
                 </div>
 
                 {/* Technology */}
-                <div className="p-4 bg-space-section/50 rounded-lg border border-space-border hover:border-gray-600 transition-colors">
+                <div className="p-4 bg-space-section rounded-lg border border-space-border hover:border-space-border-hover transition-colors">
                     <h4 className="font-semibold text-gray-200 mb-2 flex items-center gap-2">
                         <Cpu className="w-4 h-4 text-purple-400" />
                         Technology
@@ -140,7 +140,7 @@ export default function ImpactAssessment({ impacts, weatherIndices }: ImpactAsse
                 </div>
 
                 {/* Weather Indices */}
-                <div className="p-4 bg-space-section/50 rounded-lg border border-space-border hover:border-gray-600 transition-colors">
+                <div className="p-4 bg-space-section rounded-lg border border-space-border hover:border-space-border-hover transition-colors">
                     <div className="flex items-center justify-between mb-2">
                         <h4 className="font-semibold text-gray-200 flex items-center gap-2">
                             <Activity className="w-4 h-4 text-cyan-400" />

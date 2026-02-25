@@ -11,7 +11,7 @@ export default function SolarFlareCard({ solarFlare }: SolarFlareCardProps) {
         <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-space-card/70 border border-space-border p-5 rounded-xl hover:border-yellow-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/10"
+            className="bg-space-card border border-space-border p-5 rounded-xl"
         >
             <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -50,18 +50,18 @@ export default function SolarFlareCard({ solarFlare }: SolarFlareCardProps) {
                     </p>
                 )}
                 <div className="flex items-start gap-2 mt-2 pt-2 border-t border-space-border">
-                    <Clock className="w-3 h-3 text-gray-600 mt-0.5 flex-shrink-0" />
+                    <Clock className="w-3 h-3 text-space-text-muted mt-0.5 flex-shrink-0" />
                     <div className="flex-1">
                         {solarFlare.latestFlare.beginTime && (
-                            <p className="text-gray-600">
+                            <p className="text-space-text-muted">
                                 <span className="text-space-text-soft">Start:</span> {new Date(solarFlare.latestFlare.beginTime).toLocaleString()}
                             </p>
                         )}
-                        <p className="text-gray-600">
+                        <p className="text-space-text-muted">
                             <span className="text-space-text-soft">Peak:</span> {new Date(solarFlare.latestFlare.peakTime).toLocaleString()}
                         </p>
                         {solarFlare.latestFlare.endTime && (
-                            <p className="text-gray-600">
+                            <p className="text-space-text-muted">
                                 <span className="text-space-text-soft">End:</span> {new Date(solarFlare.latestFlare.endTime).toLocaleString()}
                             </p>
                         )}

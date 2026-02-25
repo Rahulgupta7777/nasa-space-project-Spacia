@@ -12,12 +12,12 @@ export default function SummaryAlert({ summary, dataQuality }: SummaryAlertProps
         <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`rounded-2xl p-6 shadow-lg border ${summary.color === "red"
-                    ? "bg-gradient-to-br from-[#1a0002] via-[#2a0a0d] to-[#140001] border-[#4d0b0f]"
-                    : summary.color === "orange"
-                        ? "bg-gradient-to-br from-[#1b0d00] via-[#2b1505] to-[#120700] border-[#5a2a00]"
-                        : "bg-gradient-to-br from-[#0a0a0a] via-[#101010] to-[#000000] border-[#1c1c1c]"
-                } backdrop-blur-sm`}
+            className={`rounded-xl p-6 border ${summary.color === "red"
+                ? "bg-red-950/20 border-red-900/50"
+                : summary.color === "orange"
+                    ? "bg-orange-950/20 border-orange-900/50"
+                    : "bg-space-card border-space-border"
+                }`}
         >
             <div className="flex justify-between items-start mb-3">
                 <div>
@@ -31,7 +31,7 @@ export default function SummaryAlert({ summary, dataQuality }: SummaryAlertProps
             <p className="text-gray-200 mb-4">{summary.message}</p>
 
             {summary.alerts && summary.alerts.length > 0 && (
-                <div className="mb-4 p-3 bg-black/30 rounded-lg border border-red-400/50">
+                <div className="mb-4 p-3 bg-space-section rounded-lg border border-red-900/30">
                     <h4 className="font-semibold text-red-300 mb-2 flex items-center gap-2">
                         <AlertTriangle className="w-4 h-4" />
                         Active Alerts
