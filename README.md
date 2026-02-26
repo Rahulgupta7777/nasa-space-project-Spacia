@@ -1,11 +1,13 @@
 # Spacia - LEO Business & Operations Platform
 
 ## Problem Statement
+
 As the commercialization of space rapidly accelerates, the future of business in low Earth orbit (LEO) holds incredible potential, but also presents significant operational, regulatory, and environmental challenges. This new economic frontier invites innovative and sustainable approaches to foster long-term viability and responsible execution. Your challenge is to conceptualize and design a scalable, sustainable, business model, accompanied by a prototype, that explores the unique opportunities LEO offers while addressing the complexities of operating in space. (Joint Agency Satellite Division)
 
 ## Project Video
-[Watch the Video](https://drive.google.com/file/d/1Wkv_pZ3fWeAM2SeOe6yKeXC_lzZI-MBa/view?usp=sharing)
 
+[Watch the Video](https://drive.google.com/file/d/1Wkv_pZ3fWeAM2SeOe6yKeXC_lzZI-MBa/view?usp=sharing)
+<video controls src="./submission/spacia%20demo.mov" width="100%" title="Application Demo"></video>
 ---
 
 ## 📋 Table of Contents
@@ -26,38 +28,48 @@ As the commercialization of space rapidly accelerates, the future of business in
 ## ✨ Page Highlights
 
 ### 🏠 Home Page
+
 **Location**: `src/app/page.tsx`
 The landing page introduces the Spacia platform with a high-impact visual experience.
+
 - **Hero Section**: Features an `AnimatedHero` component that engages users immediately.
 - **Live Preview**: Includes a `MiniDashboard` to give a glimpse of the real-time tracking capabilities.
 - **Features Overview**: Showcases key platform pillars using `PillarsSection` and `WorldviewShowcase`.
 
 ### 🌍 Dashboard (3D Earth View)
+
 **Location**: `src/app/dashboard/page.tsx`
 The core of the platform, offering a comprehensive view of the orbital environment.
+
 - **Interactive Globe**: Powered by the `EarthView` component, rendering a 3D Earth with real-time satellite and debris data.
 - **Real-Time Tracking**: Visualizes over 13,000 satellites and 28,000 debris objects.
 - **Risk Zones**: Highlights high-density areas and potential collision risks.
 - **Controls**: Users can filter objects, view orbits, and inspect specific satellites.
 
 ### ☀️ Space Weather
+
 **Location**: `src/app/spaceweather/page.tsx`
 A dedicated dashboard for monitoring solar and geomagnetic conditions that impact space operations.
+
 - **Solar Activity**: Tracks solar flares and solar wind data.
 - **Impact Analysis**: Assesses risks to satellites, communications, and power grids.
 - **Visualizations**: Uses charts and data feeds to present complex weather data clearly.
 
 ### 🚀 Launch Planner
+
 **Location**: `src/app/planner/page.tsx`
 A critical tool for mission planning and orbit analysis.
+
 - **Feasibility Checks**: Validates launch sites against desired orbital inclinations.
 - **Debris Risk Assessment**: Calculates collision risks for specific altitudes using the `LaunchPlanner` component.
 - **Lifetime Estimation**: Predicts orbital decay and ensures compliance with the 25-year deorbit rule.
 - **3D Preview**: Visualizes the planned orbit using `OrbitalGlobe`.
 
 ### 💼 Business Advisor
+
 **Location**: `src/app/business/page.tsx`
 An AI-powered module designed to assist with the commercial aspects of space missions.
+
 - **AI Integration**: Utilizes **any llm model** to generate insights and proposals.
 - **Mission Feasibility**: Analyzes the viability of proposed space business models.
 - **Proposal Generation**: Automatically creates detailed business proposals, which can be exported to PDF.
@@ -79,6 +91,7 @@ flowchart TB
 ```
 
 **User Journey:**
+
 1. **Home**: Overview with live debris preview
 2. **Dashboard**: Interactive 3D visualization of LEO environment
 3. **Space Weather**: Real-time solar activity and geomagnetic conditions
@@ -91,6 +104,7 @@ flowchart TB
 ## 🧱 Tech Stack
 
 ### Frontend
+
 - **Framework**: [Next.js 15](https://nextjs.org/) with App Router
 - **React**: Version 19.1.0 with Server Components
 - **TypeScript**: Version 5 for type safety
@@ -99,19 +113,22 @@ flowchart TB
 - **Charts**: [Recharts](https://recharts.org/) for space weather data visualization
 
 ### 3D Visualization
+
 - **Three.js**: 3D graphics rendering for Earth and orbital objects
 - **CesiumJS**: Advanced geospatial 3D globe visualization
 - **Satellite.js**: TLE orbit propagation and calculations
 
 ### AI & Machine Learning
+
 - **LLM Server**: Local or remote LLM inference server (e.g., any llm model)
 - **Model**: Configurable model for business proposal generation
 - **Private Inference**: All AI processing happens on your infrastructure
 
 ### Backend & APIs
+
 - **Next.js API Routes**: Serverless API endpoints
 - **NextAuth**: GitHub OAuth authentication
-- **NASA APIs**: 
+- **NASA APIs**:
   - DONKI (Space Weather Database)
   - GIBS (Global Imagery Browse Services)
   - CME Analysis API
@@ -123,11 +140,13 @@ flowchart TB
 - **CelesTrak**: TLE (Two-Line Element) data for satellite tracking
 
 ### Data & External Services
+
 - **TLE Data Sources**: Real-time orbital element sets
 - **Space Weather Data**: NOAA SWPC, NASA DONKI
 - **Earth Observation**: NASA GIBS WMTS/WMS
 
 ### Development Tools
+
 - **ESLint**: Code quality and consistency
 - **PostCSS**: CSS processing and optimization
 - **Turbopack**: Fast bundling for development and production
@@ -231,13 +250,13 @@ git clone https://github.com/Rahulgupta7777/nasa-space-project-Spacia.git
 cd nasa-space-project-Spacia
 ```
 
-2. **Install dependencies**
+1. **Install dependencies**
 
 ```bash
 npm install
 ```
 
-3. **Configure environment variables**
+1. **Configure environment variables**
 
 Create a `.env.local` file in the root directory:
 
@@ -258,11 +277,11 @@ GITHUB_SECRET=your-github-oauth-client-secret
 NASA_API_KEY=your-nasa-api-key
 ```
 
-4. **Set up LLM (Optional - for AI features)**
+1. **Set up LLM (Optional - for AI features)**
 
 Ensure you have access to any LLM model server.
 
-5. **Run development server**
+1. **Run development server**
 
 ```bash
 npm run dev
@@ -289,6 +308,7 @@ npm start
 **File**: `src/app/dashboard/page.tsx`, `src/components/EarthView.tsx`
 
 **Features**:
+
 - Real-time 3D Earth globe with orbital objects
 - Tracks 13,000+ satellites and 28,000+ debris objects
 - Visual risk zones showing high-density areas
@@ -306,6 +326,7 @@ npm start
 **File**: `src/app/spaceweather/page.tsx`, `src/app/api/weather/route.ts`
 
 **Features**:
+
 - **Solar Flares**: X/M/C-class event tracking with NOAA data
 - **Geomagnetic Activity**: Kp index monitoring with 24-hour forecasts
 - **Solar Wind**: Real-time speed, density, temperature, Bz/Bt magnetic field
@@ -316,6 +337,7 @@ npm start
 - **Weather Indices**: Dst, radiation belt levels, ionospheric disturbance
 
 **Data Sources**:
+
 - NASA DONKI API (Solar flares, CMEs)
 - NOAA Space Weather Prediction Center
 - Real-time magnetometer data
@@ -328,6 +350,7 @@ npm start
 **File**: `src/app/planner/page.tsx`, `src/components/LaunchPlanner.tsx`, `src/app/api/planner/route.ts`
 
 **Features**:
+
 - **Site Feasibility Analysis**: Validates if a launch site can reach desired inclination
 - **Debris Risk Scoring**: Low/Moderate/High risk assessment based on altitude
 - **Orbital Lifetime Estimation**: Predicts satellite lifetime considering:
@@ -340,6 +363,7 @@ npm start
 - **Visual Orbit Preview**: 3D visualization of planned orbit
 
 **Calculations**:
+
 - King-Hele orbital decay model
 - Altitude-dependent scale height
 - Solar flux variations (F10.7 index)
@@ -349,8 +373,9 @@ npm start
 **File**: `src/app/business/page.tsx`, `src/app/api/business/route.ts`
 
 **Features**:
+
 - **Mission Feasibility Analysis**: AI-powered viability assessment
-- **Project Type Support**: 
+- **Project Type Support**:
   - Communication Constellations
   - Earth Observation
   - Navigation/PNT
@@ -383,6 +408,7 @@ npm start
 **File**: `src/app/api/gibs/route.ts`
 
 **Features**:
+
 - NASA GIBS WMTS/WMS proxy
 - MODIS/VIIRS imagery layers
 - Time-series support
@@ -401,6 +427,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 **Endpoint**: `GET /api/weather`
 
 **Response**:
+
 ```json
 {
   "solarFlare": {
@@ -451,6 +478,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 **Endpoint**: `POST /api/planner`
 
 **Request Body**:
+
 ```json
 {
   "siteLat": 28.573255,
@@ -463,6 +491,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 ```
 
 **Response**:
+
 ```json
 {
   "launchSiteAnalysis": {
@@ -506,6 +535,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 **Authentication**: Required (NextAuth session)
 
 **Request Body**:
+
 ```json
 {
   "projectName": "IndiaComm Constellation",
@@ -519,6 +549,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 ```
 
 **Response**:
+
 ```json
 {
   "result": "# LEO Commercialization Business Proposal\n\n## Executive Summary\n..."
@@ -530,6 +561,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 **Endpoint**: `GET /api/alerts`
 
 **Response**:
+
 ```json
 {
   "count": 3,
@@ -555,6 +587,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 **Endpoint**: `GET /api/gibs`
 
 **Query Parameters**:
+
 - `layer` (required): GIBS layer name
 - `time`: ISO date string
 - `wms`: Flag for WMS mode
@@ -568,22 +601,26 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 ## 🔐 Security & Privacy
 
 ### Authentication
+
 - **GitHub OAuth**: Secure authentication via NextAuth
 - **Session Management**: HTTP-only cookies, secure tokens
 - **Protected Routes**: Business advisor requires authentication
 
 ### AI Privacy
+
 - **Local Inference**: LLM runs on your infrastructure
 - **No Data Leakage**: Mission data never leaves your network
 - **Model Isolation**: Each session is independent
 
 ### API Security
+
 - **Rate Limiting**: Built-in throttling for external APIs
 - **Input Validation**: All user inputs sanitized
 - **CORS Configuration**: Restricted cross-origin requests
 - **Environment Variables**: Secrets stored in `.env.local` (never committed)
 
 ### Data Handling
+
 - **Caching**: 15-minute TTL reduces API load
 - **No Persistence**: Mission data not stored server-side
 - **Client-Side Processing**: Heavy computation in browser when possible
@@ -597,6 +634,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 **Problem**: "Failed to connect to LLM server"
 
 **Solutions**:
+
 1. Ensure LLM server is running
 2. Verify `LLM_URL` in `.env.local` matches server address
 3. Check LLM is accessible
@@ -607,6 +645,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 **Problem**: "Failed to load Cesium assets"
 
 **Solutions**:
+
 1. Verify `public/cesium/` directory exists and is complete
 2. Check browser console for specific asset errors
 3. Clear browser cache and reload
@@ -617,6 +656,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 **Problem**: "NASA API rate limit exceeded"
 
 **Solutions**:
+
 1. Get a free API key from [api.nasa.gov](https://api.nasa.gov/)
 2. Add `NASA_API_KEY` to `.env.local`
 3. Default `DEMO_KEY` has 30 requests/hour limit
@@ -627,6 +667,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 **Problem**: Low FPS in Dashboard view
 
 **Solutions**:
+
 1. Reduce number of visible objects using filters
 2. Disable small debris visualization
 3. Lower screen resolution or use smaller window
@@ -638,6 +679,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 **Problem**: TypeScript or ESLint errors during build
 
 **Solutions**:
+
 1. Run `npm install` to ensure all dependencies are installed
 2. Check `tsconfig.json` and `eslint.config.mjs` configurations
 3. Build ignores are enabled by default in `next.config.ts`
@@ -648,6 +690,7 @@ Most API endpoints are public. The `/api/business` endpoint requires authenticat
 **Problem**: GitHub OAuth not working
 
 **Solutions**:
+
 1. Verify `GITHUB_ID` and `GITHUB_SECRET` in `.env.local`
 2. Check OAuth app settings in GitHub Developer Settings
 3. Ensure `NEXTAUTH_URL` matches your deployment URL
@@ -697,6 +740,7 @@ Contributions are welcome! Please follow these guidelines:
 5. **Open a Pull Request**
 
 ### Development Guidelines
+
 - Follow TypeScript best practices
 - Maintain test coverage above 80%
 - Document all API endpoints
